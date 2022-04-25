@@ -41,17 +41,20 @@ def experiment(
     if env_name == 'hopper':
         env = gym.make('Hopper-v3')
         max_ep_len = 1000
-        env_targets = [3600, 1800]  # evaluation conditioning targets
+        env_targets = np.arange(1800, 3600+100, 100)
+        # env_targets = [3600, 1800]  # evaluation conditioning targets
         scale = 1000.  # normalization for rewards/returns
     elif env_name == 'halfcheetah':
         env = gym.make('HalfCheetah-v3')
         max_ep_len = 1000
-        env_targets = [12000, 6000]
+        env_targets = np.arange(6000, 12000+400, 400)
+        # env_targets = [12000, 6000]
         scale = 1000.
     elif env_name == 'walker2d':
         env = gym.make('Walker2d-v3')
         max_ep_len = 1000
-        env_targets = [5000, 2500]
+        env_targets = np.arange(2500, 5100+200, 200)
+        # env_targets = [5000, 2500]
         scale = 1000.
     else:
         raise NotImplementedError
@@ -183,20 +186,32 @@ def experiment(
             }
         return fn
 
-    model = DecisionTransformer(
-        state_dim=state_dim,
-        act_dim=act_dim,
-        max_length=variant['K'],
-        max_ep_len=max_ep_len,
-        hidden_size=variant['embed_dim'],
-        n_layer=variant['n_layer'],
-        n_head=variant['n_head'],
-        n_inner=4*variant['embed_dim'],
-        activation_function=variant['activation_function'],
-        n_positions=1024,
-        resid_pdrop=variant['dropout'],
-        attn_pdrop=variant['dropout'],
-    )
+    if variant['model_name'] != '':
+        path = f"{variant['save_path']}/{variant['model_name']}"
+
+        file_to_read = open(path + '-kwargs', 'rb')
+        model_kwargs = pickle.load(file_to_read)
+
+        model = DecisionTransformer(**model_kwargs)
+        model.load_state_dict(torch.load(path + '-model'))
+
+    else:
+        model_kwargs = {
+            'state_dim'           : state_dim,
+            'act_dim'             : act_dim,
+            'max_length'          : variant['K'],
+            'max_ep_len'          : max_ep_len,
+            'hidden_size'         : variant['embed_dim'],
+            'n_layer'             : variant['n_layer'],
+            'n_head'              : variant['n_head'],
+            'n_inner'             : 4*variant['embed_dim'],
+            'activation_function' : variant['activation_function'],
+            'n_positions'         : 1024,
+            'resid_pdrop'         : variant['dropout'],
+            'attn_pdrop'          : variant['dropout']
+        }
+
+        model = DecisionTransformer(**model_kwargs)
 
     model = model.to(device=device)
 
@@ -230,24 +245,30 @@ def experiment(
         )
         # wandb.watch(model)  # wandb has some bug
 
-    save_iters = set(map(int, variant['save_iters'].split(',')))
-    eval_iters = set(map(int, variant['eval_iters'].split(',')))
 
-    for iter in range(variant['max_iters']):
+    save_iters = set(map(int, variant['save_iters'].split(','))) if variant['save_iters'] != '' else []
+    eval_iters = set(map(int, variant['eval_iters'].split(','))) if variant['eval_iters'] != '' else []
+
+    for iter in range(1, variant['max_iters'] + 1):
+
+        outputs = 1 # trainer.train_iteration(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
 
         if iter in save_iters:
             path = variant['save_path'] + f'/iter{iter}-{group_name}'
-            # save_model(path=path)
+
+            file = open(path + '-kwargs', 'wb')
+            pickle.dump(model_kwargs, file)
+            file.close()
+
+            torch.save(trainer.model.state_dict(), path + '-model')
+
 
         if iter in eval_iters:
-            eval_outputs = trainer.evaluate(num_steps=variant['num_steps_per_iter'], iter_num=iter+1, print_logs=True)
-            file = open(f'evaluation_data/iter{iter}-{exp_prefix}')
+            eval_outputs = trainer.evaluate(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
+            file = open(f'evaluation_data/iter{iter}-{exp_prefix}', 'wb')
             pickle.dump(eval_outputs, file)
             file.close()
-            
 
-        outputs = trainer.train_iteration(num_steps=variant['num_steps_per_iter'], iter_num=iter+1, print_logs=True)
-        
         if log_to_wandb:
             if iter in eval_iters:
                 for k, v in eval_outputs.items():
@@ -264,17 +285,15 @@ def experiment(
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--load_model', type=bool, defualt=False)
-    parser.add_argument('--load_path', type=str, defualt='./')
+    parser.add_argument('--model_name', type=str, default='')
 
-    parser.add_argument('--save_iters', type=str, defualt='') # string like '5,10,15'
-    parser.add_argument('--save_path', type=str, defualt='./')
+    parser.add_argument('--save_iters', type=str, default='1,2') # string like '5,10,15'
+    parser.add_argument('--save_path', type=str, default='./saved_models')
     
-    parser.add_argument('--eval_iters', type=str, defualt='') # string like '5,10,15'
+    parser.add_argument('--eval_iters', type=str, default='') # string like '5,10,15'
 
     parser.add_argument('--env', type=str, default='hopper')
     parser.add_argument('--dataset', type=str, default='medium')  # medium, medium-replay, medium-expert, expert
-    parser.add_argument('--K', type=int, default=20)
     parser.add_argument('--num_eval_episodes', type=int, default=100)
     parser.add_argument('--max_iters', type=int, default=10)
     parser.add_argument('--device', type=str, default='cpu')
@@ -284,6 +303,9 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--embed_dim', type=int, default=128)
 
+    parser.add_argument('--num_steps_per_iter', type=int, default=10000)
+    
+    parser.add_argument('--K', type=int, default=20) # contect window
     parser.add_argument('--n_layer', type=int, default=3)
     parser.add_argument('--n_head', type=int, default=1)
     parser.add_argument('--activation_function', type=str, default='relu')
@@ -291,7 +313,6 @@ if __name__ == '__main__':
     parser.add_argument('--learning_rate', '-lr', type=float, default=1e-4)
     parser.add_argument('--weight_decay', '-wd', type=float, default=1e-4)
     parser.add_argument('--warmup_steps', type=int, default=10000)
-    parser.add_argument('--num_steps_per_iter', type=int, default=10000)
     parser.add_argument('--mode', type=str, default='normal')
 
     args = parser.parse_args()
