@@ -10,7 +10,7 @@ def evaluate_episode(
         max_ep_len=1000,
         device='cuda',
         target_return=None,
-        mode='normal',
+        mode='normal', # Not used, but can be as delayed
         state_mean=0.,
         state_std=1.,
 ):

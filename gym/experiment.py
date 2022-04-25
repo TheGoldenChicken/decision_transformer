@@ -29,7 +29,7 @@ def experiment(
         exp_prefix,
         variant,
 ):
-    device = variant.get('device', 'cuda')
+    device = variant.get('device', 'cpu')
     log_to_wandb = variant.get('log_to_wandb', False)
 
     env_name, dataset = variant['env'], variant['dataset']
@@ -84,9 +84,9 @@ def experiment(
     # States is basically a flattened list of observations from all trajectories
     print('Creating states list')
     for path in tqdm(trajectories):
-        if mode == 'delayed':  # delayed: all rewards moved to end of trajectory
-            path['rewards'][-1] = path['rewards'].sum()
-            path['rewards'][:-1] = 0.
+        # if mode == 'delayed':  # delayed: all rewards moved to end of trajectory
+        #     path['rewards'][-1] = path['rewards'].sum()
+        #     path['rewards'][:-1] = 0.
         states.append(path['observations'])
         traj_lens.append(len(path['observations']))
         # Really weird here, delayed reward and regular reward seems to give the same result
@@ -113,8 +113,8 @@ def experiment(
     K = variant['K'] # Context length
     batch_size = variant['batch_size']
     num_eval_episodes = variant['num_eval_episodes']
-    pct_traj = variant.get('pct_traj', 1.) # For %BC in DT paper, behavior cloning
 
+    pct_traj = variant.get('pct_traj', 1.) # For %BC in DT paper, behavior cloning
     # only train on top pct_traj trajectories (for %BC experiment)
     num_timesteps = max(int(pct_traj*num_timesteps), 1)
     sorted_inds = np.argsort(returns)  # lowest to highest
@@ -167,8 +167,6 @@ def experiment(
             if rtg[-1].shape[1] <= s[-1].shape[1]: # Some shape correction here.. don't know when states would ever be longer than reward to go
                 rtg[-1] = np.concatenate([rtg[-1], np.zeros((1, 1, 1))], axis=1)
 
-            ############### MADE TO HERE ###############
-
             # padding and state + reward normalization
             tlen = s[-1].shape[1]
             s[-1] = np.concatenate([np.zeros((1, max_len - tlen, state_dim)), s[-1]], axis=1)
@@ -195,6 +193,7 @@ def experiment(
             returns, lengths = [], []
             for _ in range(num_eval_episodes):
                 with torch.no_grad():
+                    # Test model with given target reward
                     if model_type == 'dt':
                         ret, length = evaluate_episode_rtg(
                             env,
@@ -209,7 +208,7 @@ def experiment(
                             state_std=state_std,
                             device=device,
                         )
-                    else:
+                    else: # model_type == 'bc'
                         ret, length = evaluate_episode(
                             env,
                             state_dim,
@@ -327,7 +326,7 @@ if __name__ == '__main__':
     parser.add_argument('--num_eval_episodes', type=int, default=100)
     parser.add_argument('--max_iters', type=int, default=10)
     parser.add_argument('--num_steps_per_iter', type=int, default=10000)
-    parser.add_argument('--device', type=str, default='cuda')
+    parser.add_argument('--device', type=str, default='cpu')
     parser.add_argument('--log_to_wandb', '-w', type=bool, default=False)
     
     args = parser.parse_args()
