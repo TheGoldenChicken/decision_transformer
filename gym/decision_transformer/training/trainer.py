@@ -34,16 +34,6 @@ class Trainer:
 
         logs['time/training'] = time.time() - train_start
 
-        eval_start = time.time()
-
-        self.model.eval()
-        for eval_fn in self.eval_fns:
-            outputs = eval_fn(self.model)
-            for k, v in outputs.items():
-                logs[f'evaluation/{k}'] = v
-
-        logs['time/total'] = time.time() - self.start_time
-        logs['time/evaluation'] = time.time() - eval_start
         logs['training/train_loss_mean'] = np.mean(train_losses)
         logs['training/train_loss_std'] = np.std(train_losses)
 
@@ -57,6 +47,36 @@ class Trainer:
                 print(f'{k}: {v}')
 
         return logs
+
+
+    def evaluate(self, num_steps, iter_num=0, print_logs=False):
+
+        logs = dict()
+        eval_start = time.time()
+
+        self.model.eval()
+        for eval_fn in self.eval_fns:
+            outputs = eval_fn(self.model)
+            logs.update(outputs)
+
+        logs['time/evaluation'] = time.time() - eval_start
+
+        for k in self.diagnostics:
+            logs[k] = self.diagnostics[k]
+
+        if print_logs:
+            print('=' * 80)
+            print(f'Iteration {iter_num}')
+            for k, v in logs.items():
+                if k == 'time/evaluation':
+                    print(f'{k}: {v}')
+                else:
+                    target, statistic = k.split('_')
+                    print(f'target_{target}_{statistic[:-1]}_mean: {np.mean(v)}')
+                    print(f'target_{target}_{statistic[:-1]}_std: {np.std(v)}')
+
+        return logs
+
 
     def train_step(self):
         states, actions, rewards, dones, attention_mask, returns = self.get_batch(self.batch_size)

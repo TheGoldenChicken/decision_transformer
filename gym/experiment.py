@@ -69,7 +69,6 @@ def experiment(
         # Ok, turns out not, there is some difference, don't know what though
 
     # save all path information into separate lists
-    mode = variant.get('mode', 'normal')
     states, traj_lens, returns = [], [], []
     # States is basically a flattened list of observations from all trajectories
     print('Creating states list')
@@ -95,16 +94,12 @@ def experiment(
     print(f'Max return: {np.max(returns):.2f}, min: {np.min(returns):.2f}')
     print('=' * 50)
 
-    K = variant['K'] # Context length
-    batch_size = variant['batch_size']
-    num_eval_episodes = variant['num_eval_episodes']
-    
 
     # used to reweight sampling so we sample according to timesteps instead of trajectories
     # makes longer trajectories more likely to be sampled
     p_sample = traj_lens / sum(traj_lens)
 
-    def get_batch(batch_size=256, max_len=K):
+    def get_batch(batch_size=256, max_len=variant['K']):
         batch_inds = np.random.choice(
             np.arange(len(traj_lens)),
             size=batch_size,
@@ -161,7 +156,7 @@ def experiment(
     def eval_episodes(target_rew):
         def fn(model):
             returns, lengths = [], []
-            for _ in range(num_eval_episodes):
+            for _ in range(variant['num_eval_episodes']):
                 with torch.no_grad():
                     ret, length = evaluate_episode_rtg(
                         env,
@@ -171,7 +166,7 @@ def experiment(
                         max_ep_len=max_ep_len,
                         scale=scale,
                         target_return=target_rew/scale,
-                        mode=mode,
+                        mode=variant.get('mode', 'normal'),
                         state_mean=state_mean,
                         state_std=state_std,
                         device=device,
@@ -179,17 +174,19 @@ def experiment(
                 returns.append(ret)
                 lengths.append(length)
             return {
-                f'target_{target_rew}_return_mean': np.mean(returns),
-                f'target_{target_rew}_return_std': np.std(returns),
-                f'target_{target_rew}_length_mean': np.mean(lengths),
-                f'target_{target_rew}_length_std': np.std(lengths),
+                f'{target_rew}_returns': returns,
+                f'{target_rew}_lenghts': lengths
+                # f'target_{target_rew}_return_mean': np.mean(returns),
+                # f'target_{target_rew}_return_std': np.std(returns),
+                # f'target_{target_rew}_length_mean': np.mean(lengths),
+                # f'target_{target_rew}_length_std': np.std(lengths),
             }
         return fn
 
     model = DecisionTransformer(
         state_dim=state_dim,
         act_dim=act_dim,
-        max_length=K,
+        max_length=variant['K'],
         max_ep_len=max_ep_len,
         hidden_size=variant['embed_dim'],
         n_layer=variant['n_layer'],
@@ -217,7 +214,7 @@ def experiment(
     trainer = SequenceTrainer(
         model=model,
         optimizer=optimizer,
-        batch_size=batch_size,
+        batch_size= variant['batch_size'],
         get_batch=get_batch,
         scheduler=scheduler,
         loss_fn=lambda s_hat, a_hat, r_hat, s, a, r: torch.mean((a_hat - a)**2),
@@ -233,14 +230,44 @@ def experiment(
         )
         # wandb.watch(model)  # wandb has some bug
 
+    save_iters = set(map(int, variant['save_iters'].split(',')))
+    eval_iters = set(map(int, variant['eval_iters'].split(',')))
+
     for iter in range(variant['max_iters']):
+
+        if iter in save_iters:
+            # save_model()
+            pass
+
+        if iter in eval_iters:
+            eval_outputs = trainer.evaluate(num_steps=variant['num_steps_per_iter'], iter_num=iter+1, print_logs=True)
+            
+
         outputs = trainer.train_iteration(num_steps=variant['num_steps_per_iter'], iter_num=iter+1, print_logs=True)
+        outputs2 = trainer.evaluate(num_steps=variant['num_steps_per_iter'], iter_num=iter+1, print_logs=True)
         if log_to_wandb:
+            for k, v in outputs2.items():
+                if k == 'time/evaluation':
+                    outputs[k] = v
+                else:
+                    target, statistic = k.split('_')
+                    outputs[f'evaluation/target_{target}_{statistic[:-1]}_mean'] = np.mean(v)
+                    outputs[f'evaluation/target_{target}_{statistic[:-1]}_std'] = np.std(v)
+
             wandb.log(outputs)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+
+    parser.add_argument('--load_model', type=bool, defualt=False)
+    parser.add_argument('--load_path', type=str, defualt='./')
+
+    parser.add_argument('--save_iters', type=str, defualt='') # string like '5,10,15'
+    parser.add_argument('--save_path', type=str, defualt='./')
+    
+    parser.add_argument('--eval_iters', type=str, defualt='') # string like '5,10,15'
+
     parser.add_argument('--env', type=str, default='hopper')
     parser.add_argument('--dataset', type=str, default='medium')  # medium, medium-replay, medium-expert, expert
     parser.add_argument('--K', type=int, default=20)
@@ -261,7 +288,7 @@ if __name__ == '__main__':
     parser.add_argument('--warmup_steps', type=int, default=10000)
     parser.add_argument('--num_steps_per_iter', type=int, default=10000)
     parser.add_argument('--mode', type=str, default='normal')
-    
+
     args = parser.parse_args()
 
     experiment('gym-experiment', variant=vars(args))
