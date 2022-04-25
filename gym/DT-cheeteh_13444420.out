@@ -1,0 +1,9 @@
+W&B enabled, running your script from this directory will now sync to the cloud.
+Disabling Weights & Biases. Run 'wandb login' again to re-enable.
+Creating states list
+==================================================
+Starting new experiment: halfcheetah expert
+1000 trajectories, 1000000 timesteps found
+Average return: 10656.43, std: 441.68
+Max return: 11252.04, min: 2045.83
+==================================================

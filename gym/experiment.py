@@ -249,7 +249,7 @@ def experiment(
 
     for iter in range(1, variant['max_iters'] + 1):
 
-        outputs = 1 # trainer.train_iteration(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
+        outputs = trainer.train_iteration(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
 
         if iter in save_iters:
             path = variant['save_path'] + f'/iter{iter}-{group_name}'
