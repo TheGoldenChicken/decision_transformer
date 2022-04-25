@@ -97,7 +97,6 @@ def experiment(
     print(f'Max return: {np.max(returns):.2f}, min: {np.min(returns):.2f}')
     print('=' * 50)
 
-
     # used to reweight sampling so we sample according to timesteps instead of trajectories
     # makes longer trajectories more likely to be sampled
     p_sample = traj_lens / sum(traj_lens)
@@ -132,8 +131,6 @@ def experiment(
             rtg.append(discount_cumsum(traj['rewards'][si:], gamma=1.)[:s[-1].shape[1] + 1].reshape(1, -1, 1)) # Only get reward to go in context length (+1 context length for some reason...)
             if rtg[-1].shape[1] <= s[-1].shape[1]: # Some shape correction here.. don't know when states would ever be longer than reward to go
                 rtg[-1] = np.concatenate([rtg[-1], np.zeros((1, 1, 1))], axis=1)
-
-            ############### MADE TO HERE ###############
 
             # padding and state + reward normalization
             tlen = s[-1].shape[1]
@@ -179,6 +176,7 @@ def experiment(
             return {
                 f'{target_rew}_returns': returns,
                 f'{target_rew}_lenghts': lengths
+
                 # f'target_{target_rew}_return_mean': np.mean(returns),
                 # f'target_{target_rew}_return_std': np.std(returns),
                 # f'target_{target_rew}_length_mean': np.mean(lengths),
