@@ -236,23 +236,27 @@ def experiment(
     for iter in range(variant['max_iters']):
 
         if iter in save_iters:
-            # save_model()
-            pass
+            path = variant['save_path'] + f'/iter{iter}-{group_name}'
+            # save_model(path=path)
 
         if iter in eval_iters:
             eval_outputs = trainer.evaluate(num_steps=variant['num_steps_per_iter'], iter_num=iter+1, print_logs=True)
+            file = open(f'evaluation_data/iter{iter}-{exp_prefix}')
+            pickle.dump(eval_outputs, file)
+            file.close()
             
 
         outputs = trainer.train_iteration(num_steps=variant['num_steps_per_iter'], iter_num=iter+1, print_logs=True)
-        outputs2 = trainer.evaluate(num_steps=variant['num_steps_per_iter'], iter_num=iter+1, print_logs=True)
+        
         if log_to_wandb:
-            for k, v in outputs2.items():
-                if k == 'time/evaluation':
-                    outputs[k] = v
-                else:
-                    target, statistic = k.split('_')
-                    outputs[f'evaluation/target_{target}_{statistic[:-1]}_mean'] = np.mean(v)
-                    outputs[f'evaluation/target_{target}_{statistic[:-1]}_std'] = np.std(v)
+            if iter in eval_iters:
+                for k, v in eval_outputs.items():
+                    if k == 'time/evaluation':
+                        outputs[k] = v
+                    else:
+                        target, statistic = k.split('_')
+                        outputs[f'evaluation/target_{target}_{statistic[:-1]}_mean'] = np.mean(v)
+                        outputs[f'evaluation/target_{target}_{statistic[:-1]}_std'] = np.std(v)
 
             wandb.log(outputs)
 
@@ -275,6 +279,7 @@ if __name__ == '__main__':
     parser.add_argument('--max_iters', type=int, default=10)
     parser.add_argument('--device', type=str, default='cpu')
     parser.add_argument('--log_to_wandb', '-w', type=bool, default=False)
+
 
     parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--embed_dim', type=int, default=128)
