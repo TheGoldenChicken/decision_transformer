@@ -1,7 +1,7 @@
 #!/bin/sh
 #BSUB -J DT-hopper
-#BSUB -o DT-cheeteh_%J.out
-#BSUB -e DT-cheeteh_%J.err
+#BSUB -o DT-hopper_%J.out
+#BSUB -e DT-hopper_%J.err
 #BSUB -q gpuv100
 #BSUB -gpu "num=1:mode=exclusive_process"
 #BSUB -n 4

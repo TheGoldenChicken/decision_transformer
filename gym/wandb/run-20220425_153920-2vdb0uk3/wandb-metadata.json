@@ -31,10 +31,11 @@
         "--log_to_wandb",
         "True"
     ],
-    "state": "running",
+    "state": "finished",
     "jobType": null,
     "mode": "run",
     "name": "gym-experiment-halfcheetah-expert-481832",
     "project": "decision-transformer",
-    "heartbeatAt": "2022-04-25T15:42:19.796815"
+    "heartbeatAt": "2022-04-26T01:31:44.066683",
+    "exitcode": 0
 }
