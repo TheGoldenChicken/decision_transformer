@@ -131,4 +131,4 @@ dmypy.json
 gym/data/
 
 # Data files
-.pkl
+*.pkl
