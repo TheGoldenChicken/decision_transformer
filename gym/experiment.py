@@ -31,11 +31,11 @@ def experiment(
 ):
     device = variant.get('device', 'cpu')
     log_to_wandb = variant.get('log_to_wandb', False)
-    
-    psudo_unique_id = random.randint(int(1e5), int(1e6) - 1)
+
     env_name, dataset = variant['env'], variant['dataset']
     group_name = f'{exp_prefix}-{env_name}-{dataset}'
-    exp_prefix = f'{group_name}-{psudo_unique_id}'
+    pseudo_unique = random.randint(int(1e5), int(1e6) - 1)
+    exp_prefix = f'{group_name}-{pseudo_unique}'
 
 ################## DEFINE ENV ##################
 
@@ -186,7 +186,7 @@ def experiment(
         return fn
 
     if variant['model_name'] != '':
-        path = f"{variant['save_path']}/{variant['env']}/{variant['dataset']}/{variant['model_name']}"
+        path = f"{variant['save_path']}{env_name}/{dataset}/{variant['model_name']}"
 
         file_to_read = open(path + '-kwargs', 'rb')
         model_kwargs = pickle.load(file_to_read)
@@ -250,10 +250,11 @@ def experiment(
 
     for iter in range(1, variant['max_iters'] + 1):
 
-        outputs = trainer.train_iteration(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
+        outputs = dict()
+        # outputs = trainer.train_iteration(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
 
         if iter in save_iters:
-            path = f"{variant['save_path']}/{variant['env']}/{variant['dataset']}/iter{iter}-{exp_prefix}"
+            path = f"{variant['save_path']}{env_name}/{dataset}/iter{iter}-{exp_prefix}"
 
             file = open(path + '-kwargs', 'wb')
             pickle.dump(model_kwargs, file)
@@ -264,7 +265,7 @@ def experiment(
 
         if iter in eval_iters:
             eval_outputs = trainer.evaluate(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
-            file = open(f"evaluation_data/{variant['env']}/{variant['dataset']}/iter{iter}-{exp_prefix}", 'wb')
+            file = open(f'evaluation_data/{env_name}/{dataset}/iter{iter}-{exp_prefix}', 'wb')
             pickle.dump(eval_outputs, file)
             file.close()
 
@@ -286,17 +287,18 @@ if __name__ == '__main__':
 
     parser.add_argument('--model_name', type=str, default='')
 
-    parser.add_argument('--save_iters', type=str, default='1,2') # string like '5,10,15'
-    parser.add_argument('--save_path', type=str, default='./saved_models')
+    parser.add_argument('--save_iters', type=str, default='') # string like '5,10,15'
+    parser.add_argument('--save_path', type=str, default='./saved_models/')
     
-    parser.add_argument('--eval_iters', type=str, default='') # string like '5,10,15'
+    parser.add_argument('--eval_iters', type=str, default='1') # string like '5,10,15'
 
     parser.add_argument('--env', type=str, default='hopper')
-    parser.add_argument('--dataset', type=str, default='medium')  # medium, medium_replay, expert
+    parser.add_argument('--dataset', type=str, default='medium')  # medium, medium-replay, medium-expert, expert
     parser.add_argument('--num_eval_episodes', type=int, default=100)
     parser.add_argument('--max_iters', type=int, default=10)
     parser.add_argument('--device', type=str, default='cpu')
     parser.add_argument('--log_to_wandb', '-w', type=bool, default=False)
+
 
     parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--embed_dim', type=int, default=128)
