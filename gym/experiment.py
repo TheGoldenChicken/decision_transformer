@@ -152,6 +152,9 @@ def experiment(
         timesteps = torch.from_numpy(np.concatenate(timesteps, axis=0)).to(dtype=torch.long, device=device)
         mask = torch.from_numpy(np.concatenate(mask, axis=0)).to(device=device)
 
+        # For at teste om flere rewards virker
+        # rtg = torch.cat([rtg, rtg], 2)
+
         return s, a, r, d, rtg, timesteps, mask
 
     def eval_episodes(target_rew):
@@ -198,6 +201,7 @@ def experiment(
         model_kwargs = {
             'state_dim'           : state_dim,
             'act_dim'             : act_dim,
+            'reward_dim'          : get_batch(1)[4].size(dim=2),
             'max_length'          : variant['K'],
             'max_ep_len'          : max_ep_len,
             'hidden_size'         : variant['embed_dim'],
