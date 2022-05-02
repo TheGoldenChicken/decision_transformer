@@ -1,0 +1,41 @@
+{
+    "root": "/zhome/94/3/155767/decision_transformer",
+    "program": "experiment.py",
+    "git": {
+        "remote": "https://github.com/TheGoldenChicken/decision_transformer.git",
+        "commit": "225f2fb4506f25b2f4ea691c4be36f64d5b4ab3c"
+    },
+    "email": "nielsenchristianole@gmail.com",
+    "startedAt": "2022-04-30T13:08:17.111543",
+    "host": "n-62-11-16",
+    "username": "s204131",
+    "executable": "/zhome/94/3/155767/miniconda3/envs/decision-transformer-gym/bin/python",
+    "os": "Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.10",
+    "python": "3.8.5",
+    "gpu": "Tesla V100-PCIE-32GB",
+    "gpu_count": 1,
+    "cpu_count": 32,
+    "args": [
+        "--env",
+        "halfcheetah",
+        "--dataset",
+        "medium_replay",
+        "--save_iters",
+        "5,10,11,12,13,14,15",
+        "--eval_iters",
+        "5,10,15",
+        "--max_iters",
+        "15",
+        "--device",
+        "cuda",
+        "--log_to_wandb",
+        "True"
+    ],
+    "state": "finished",
+    "jobType": null,
+    "mode": "dryrun",
+    "name": "gym-experiment-halfcheetah-medium_replay-511017",
+    "project": "decision-transformer",
+    "heartbeatAt": "2022-05-01T00:08:22.171991",
+    "exitcode": 0
+}

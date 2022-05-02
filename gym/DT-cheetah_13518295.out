@@ -1,0 +1,371 @@
+W&B enabled, running your script from this directory will now sync to the cloud.
+Disabling Weights & Biases. Run 'wandb login' again to re-enable.
+Creating states list
+==================================================
+Starting new experiment: halfcheetah medium_replay
+202 trajectories, 202000 timesteps found
+Average return: 3093.29, std: 1680.69
+Max return: 4985.14, min: -638.49
+==================================================
+================================================================================
+Iteration 1
+time/training: 1608.9705185890198
+training/train_loss_mean: 0.23967520863562822
+training/train_loss_std: 0.14038171146818168
+training/action_error: 0.12540510296821594
+================================================================================
+Iteration 2
+time/training: 1550.310140132904
+training/train_loss_mean: 0.13054918034374713
+training/train_loss_std: 0.01675928780763515
+training/action_error: 0.13578307628631592
+================================================================================
+Iteration 3
+time/training: 1604.3493812084198
+training/train_loss_mean: 0.11217787058278918
+training/train_loss_std: 0.01353576572368957
+training/action_error: 0.0938304215669632
+================================================================================
+Iteration 4
+time/training: 1550.7516467571259
+training/train_loss_mean: 0.10265476606935263
+training/train_loss_std: 0.012501548014394239
+training/action_error: 0.10700621455907822
+================================================================================
+Iteration 5
+time/training: 1554.5578227043152
+training/train_loss_mean: 0.09613211338594556
+training/train_loss_std: 0.01165699002124016
+training/action_error: 0.10094819217920303
+================================================================================
+Iteration 5
+target_6000_return_mean: 4166.943482975441
+target_6000_return_std: 826.3344890100838
+target_6000_lenght_mean: 1000.0
+target_6000_lenght_std: 0.0
+target_6400_return_mean: 4210.446051450663
+target_6400_return_std: 704.3022150173833
+target_6400_lenght_mean: 1000.0
+target_6400_lenght_std: 0.0
+target_6800_return_mean: 4237.416404601676
+target_6800_return_std: 530.1120696644052
+target_6800_lenght_mean: 1000.0
+target_6800_lenght_std: 0.0
+target_7200_return_mean: 4188.362163190142
+target_7200_return_std: 690.6170947212742
+target_7200_lenght_mean: 1000.0
+target_7200_lenght_std: 0.0
+target_7600_return_mean: 4130.223610326915
+target_7600_return_std: 740.8496890670273
+target_7600_lenght_mean: 1000.0
+target_7600_lenght_std: 0.0
+target_8000_return_mean: 4168.922944666108
+target_8000_return_std: 583.6343796974655
+target_8000_lenght_mean: 1000.0
+target_8000_lenght_std: 0.0
+target_8400_return_mean: 4229.92032770309
+target_8400_return_std: 446.5020516370245
+target_8400_lenght_mean: 1000.0
+target_8400_lenght_std: 0.0
+target_8800_return_mean: 4198.973302311515
+target_8800_return_std: 583.4925883893649
+target_8800_lenght_mean: 1000.0
+target_8800_lenght_std: 0.0
+target_9200_return_mean: 4147.172078417858
+target_9200_return_std: 673.3024047073156
+target_9200_lenght_mean: 1000.0
+target_9200_lenght_std: 0.0
+target_9600_return_mean: 3944.468675942663
+target_9600_return_std: 957.422571733067
+target_9600_lenght_mean: 1000.0
+target_9600_lenght_std: 0.0
+target_10000_return_mean: 4074.1116633862853
+target_10000_return_std: 652.6470305741318
+target_10000_lenght_mean: 1000.0
+target_10000_lenght_std: 0.0
+target_10400_return_mean: 4037.2990957423585
+target_10400_return_std: 840.2203368297895
+target_10400_lenght_mean: 1000.0
+target_10400_lenght_std: 0.0
+target_10800_return_mean: 4049.204038323612
+target_10800_return_std: 817.5957877571725
+target_10800_lenght_mean: 1000.0
+target_10800_lenght_std: 0.0
+target_11200_return_mean: 3993.0077384374586
+target_11200_return_std: 949.58362183627
+target_11200_lenght_mean: 1000.0
+target_11200_lenght_std: 0.0
+target_11600_return_mean: 4054.214001081869
+target_11600_return_std: 711.6562400103613
+target_11600_lenght_mean: 1000.0
+target_11600_lenght_std: 0.0
+target_12000_return_mean: 4085.8603880462842
+target_12000_return_std: 723.8485160412934
+target_12000_lenght_mean: 1000.0
+target_12000_lenght_std: 0.0
+time/evaluation: 4661.439834356308
+target_training/action_erro_mean: 0.10094819217920303
+target_training/action_erro_std: 0.0
+================================================================================
+Iteration 6
+time/training: 1599.8612775802612
+training/train_loss_mean: 0.09121725790053606
+training/train_loss_std: 0.010874755031688551
+training/action_error: 0.09898117184638977
+================================================================================
+Iteration 7
+time/training: 1631.6620798110962
+training/train_loss_mean: 0.08734518637694419
+training/train_loss_std: 0.010031801098355468
+training/action_error: 0.09669048339128494
+================================================================================
+Iteration 8
+time/training: 1858.602334022522
+training/train_loss_mean: 0.08398195711188018
+training/train_loss_std: 0.009522050756063395
+training/action_error: 0.09099028259515762
+================================================================================
+Iteration 9
+time/training: 1776.73157954216
+training/train_loss_mean: 0.08123525858186185
+training/train_loss_std: 0.008830017177858224
+training/action_error: 0.06435029953718185
+================================================================================
+Iteration 10
+time/training: 1544.8538167476654
+training/train_loss_mean: 0.07896725345887244
+training/train_loss_std: 0.008316739144848326
+training/action_error: 0.07230371981859207
+================================================================================
+Iteration 10
+target_6000_return_mean: 4252.525026711734
+target_6000_return_std: 732.1137611908744
+target_6000_lenght_mean: 1000.0
+target_6000_lenght_std: 0.0
+target_6400_return_mean: 4335.90920348726
+target_6400_return_std: 471.2878708443153
+target_6400_lenght_mean: 1000.0
+target_6400_lenght_std: 0.0
+target_6800_return_mean: 4298.637868533802
+target_6800_return_std: 568.9097777857368
+target_6800_lenght_mean: 1000.0
+target_6800_lenght_std: 0.0
+target_7200_return_mean: 4332.822123053566
+target_7200_return_std: 618.4392654526429
+target_7200_lenght_mean: 1000.0
+target_7200_lenght_std: 0.0
+target_7600_return_mean: 4160.1022686605575
+target_7600_return_std: 795.9712165074216
+target_7600_lenght_mean: 1000.0
+target_7600_lenght_std: 0.0
+target_8000_return_mean: 4231.640813660115
+target_8000_return_std: 615.4967229517188
+target_8000_lenght_mean: 1000.0
+target_8000_lenght_std: 0.0
+target_8400_return_mean: 4272.491544938881
+target_8400_return_std: 705.7999760046185
+target_8400_lenght_mean: 1000.0
+target_8400_lenght_std: 0.0
+target_8800_return_mean: 4116.714731670258
+target_8800_return_std: 791.6701892437445
+target_8800_lenght_mean: 1000.0
+target_8800_lenght_std: 0.0
+target_9200_return_mean: 4233.04603140877
+target_9200_return_std: 665.1653963409487
+target_9200_lenght_mean: 1000.0
+target_9200_lenght_std: 0.0
+target_9600_return_mean: 4256.084189736604
+target_9600_return_std: 671.7270855393491
+target_9600_lenght_mean: 1000.0
+target_9600_lenght_std: 0.0
+target_10000_return_mean: 4354.913704509603
+target_10000_return_std: 406.16540079574395
+target_10000_lenght_mean: 1000.0
+target_10000_lenght_std: 0.0
+target_10400_return_mean: 4232.978594446791
+target_10400_return_std: 676.0438161390256
+target_10400_lenght_mean: 1000.0
+target_10400_lenght_std: 0.0
+target_10800_return_mean: 4196.719357651468
+target_10800_return_std: 826.9043267283566
+target_10800_lenght_mean: 1000.0
+target_10800_lenght_std: 0.0
+target_11200_return_mean: 4142.857060897799
+target_11200_return_std: 815.6226691506411
+target_11200_lenght_mean: 1000.0
+target_11200_lenght_std: 0.0
+target_11600_return_mean: 4181.951593619934
+target_11600_return_std: 763.4595180571544
+target_11600_lenght_mean: 1000.0
+target_11600_lenght_std: 0.0
+target_12000_return_mean: 4217.535610899
+target_12000_return_std: 711.5501312971718
+target_12000_lenght_mean: 1000.0
+target_12000_lenght_std: 0.0
+time/evaluation: 4682.458167076111
+target_training/action_erro_mean: 0.07230371981859207
+target_training/action_erro_std: 0.0
+================================================================================
+Iteration 11
+time/training: 1542.8639605045319
+training/train_loss_mean: 0.07684374477490782
+training/train_loss_std: 0.007793747835568064
+training/action_error: 0.07589475810527802
+================================================================================
+Iteration 12
+time/training: 1681.3382532596588
+training/train_loss_mean: 0.07522809507027269
+training/train_loss_std: 0.007479466224400632
+training/action_error: 0.06026259809732437
+================================================================================
+Iteration 13
+time/training: 1657.3079674243927
+training/train_loss_mean: 0.07363266154490411
+training/train_loss_std: 0.007019780795781438
+training/action_error: 0.07260964810848236
+================================================================================
+Iteration 14
+time/training: 1550.7079627513885
+training/train_loss_mean: 0.07218041844144464
+training/train_loss_std: 0.00676975532731302
+training/action_error: 0.07734647393226624
+================================================================================
+Iteration 15
+time/training: 1623.6960508823395
+training/train_loss_mean: 0.07103584038466215
+training/train_loss_std: 0.006494288910464976
+training/action_error: 0.07148002833127975
+================================================================================
+Iteration 15
+target_6000_return_mean: 4289.760446153542
+target_6000_return_std: 666.1631325250462
+target_6000_lenght_mean: 1000.0
+target_6000_lenght_std: 0.0
+target_6400_return_mean: 4314.760344616525
+target_6400_return_std: 579.3397445135843
+target_6400_lenght_mean: 1000.0
+target_6400_lenght_std: 0.0
+target_6800_return_mean: 4231.35098097583
+target_6800_return_std: 798.0281847927075
+target_6800_lenght_mean: 1000.0
+target_6800_lenght_std: 0.0
+target_7200_return_mean: 4222.110398038228
+target_7200_return_std: 579.4446796248909
+target_7200_lenght_mean: 1000.0
+target_7200_lenght_std: 0.0
+target_7600_return_mean: 4262.492051082854
+target_7600_return_std: 634.165478558973
+target_7600_lenght_mean: 1000.0
+target_7600_lenght_std: 0.0
+target_8000_return_mean: 4168.905619864952
+target_8000_return_std: 814.4710935288364
+target_8000_lenght_mean: 1000.0
+target_8000_lenght_std: 0.0
+target_8400_return_mean: 4220.937760439597
+target_8400_return_std: 626.4734284698518
+target_8400_lenght_mean: 1000.0
+target_8400_lenght_std: 0.0
+target_8800_return_mean: 4261.431533084027
+target_8800_return_std: 659.5648435141266
+target_8800_lenght_mean: 1000.0
+target_8800_lenght_std: 0.0
+target_9200_return_mean: 4275.185358670627
+target_9200_return_std: 537.8341830644584
+target_9200_lenght_mean: 1000.0
+target_9200_lenght_std: 0.0
+target_9600_return_mean: 4239.413331377856
+target_9600_return_std: 624.7285284859587
+target_9600_lenght_mean: 1000.0
+target_9600_lenght_std: 0.0
+target_10000_return_mean: 4020.6706014541032
+target_10000_return_std: 1026.4356886081578
+target_10000_lenght_mean: 1000.0
+target_10000_lenght_std: 0.0
+target_10400_return_mean: 4315.134985782979
+target_10400_return_std: 460.63863271763137
+target_10400_lenght_mean: 1000.0
+target_10400_lenght_std: 0.0
+target_10800_return_mean: 4166.617212120574
+target_10800_return_std: 722.1316600970835
+target_10800_lenght_mean: 1000.0
+target_10800_lenght_std: 0.0
+target_11200_return_mean: 4119.0407408320325
+target_11200_return_std: 663.5566816891519
+target_11200_lenght_mean: 1000.0
+target_11200_lenght_std: 0.0
+target_11600_return_mean: 4234.4781895125
+target_11600_return_std: 620.5720300776003
+target_11600_lenght_mean: 1000.0
+target_11600_lenght_std: 0.0
+target_12000_return_mean: 4195.122344921203
+target_12000_return_std: 715.0260202054301
+target_12000_lenght_mean: 1000.0
+target_12000_lenght_std: 0.0
+time/evaluation: 5921.665558576584
+target_training/action_erro_mean: 0.07148002833127975
+target_training/action_erro_std: 0.0
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 13518295: <DT-cheetah> in cluster <dcc> Done
+
+Job <DT-cheetah> was submitted from host <n-62-30-4> by user <s204131> in cluster <dcc> at Sat Apr 30 15:07:21 2022
+Job was executed on host(s) <4*n-62-11-16>, in queue <gpuv100>, as user <s204131> in cluster <dcc> at Sat Apr 30 15:07:23 2022
+</zhome/94/3/155767> was used as the home directory.
+</zhome/94/3/155767/decision_transformer/gym> was used as the working directory.
+Started at Sat Apr 30 15:07:23 2022
+Terminated at Sun May  1 02:08:22 2022
+Results reported at Sun May  1 02:08:22 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+#BSUB -J DT-cheetah
+#BSUB -o DT-cheetah_%J.out
+#BSUB -e DT-cheetah_%J.err
+#BSUB -q gpuv100
+#BSUB -gpu "num=1:mode=exclusive_process"
+#BSUB -n 4
+#BSUB -R "rusage[mem=4G]"
+#BSUB -R "span[hosts=1]"
+#BSUB -W 15:00
+# end of BSUB options
+
+
+# load CUDA (for GPU support)
+
+# activate the virtual environment
+source $HOME/miniconda3/envs/decision-transformer-gym/bin/activate
+
+wandb on
+echo 'cad8b043f3731a2c453efd8f61915e186ac93ac3' | wandb login
+
+python experiment.py --env 'halfcheetah' --dataset 'medium_replay' --save_iters '5,10,11,12,13,14,15' --eval_iters '5,10,15' --max_iters 15 --device 'cuda' --log_to_wandb True
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   39750.40 sec.
+    Max Memory :                                 2437 MB
+    Average Memory :                             2427.59 MB
+    Total Requested Memory :                     16384.00 MB
+    Delta Memory :                               13947.00 MB
+    Max Swap :                                   -
+    Max Processes :                              6
+    Max Threads :                                21
+    Run time :                                   39686 sec.
+    Turnaround time :                            39661 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <DT-cheetah_13518295.err> for stderr output of this job.
+

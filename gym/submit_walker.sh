@@ -19,4 +19,4 @@ source $HOME/miniconda3/envs/decision-transformer-gym/bin/activate
 wandb on
 echo 'cad8b043f3731a2c453efd8f61915e186ac93ac3' | wandb login
 
-python experiment.py --env 'walker2d' --dataset 'expert' --save_iters '5,10,11,12,13,14,15' --eval_iters '5,10,15' --max_iters 15 --device 'cuda' --log_to_wandb True
+python experiment.py --env 'walker2d' --dataset 'medium_replay' --save_iters '5,10,11,12,13,14,15' --eval_iters '5,10,15' --max_iters 15 --device 'cuda' --log_to_wandb True

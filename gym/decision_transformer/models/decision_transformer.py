@@ -18,6 +18,7 @@ class DecisionTransformer(TrajectoryModel):
             self,
             state_dim,
             act_dim,
+            reward_dim,
             hidden_size,
             max_length=None,
             max_ep_len=4096,
@@ -38,7 +39,7 @@ class DecisionTransformer(TrajectoryModel):
         self.transformer = GPT2Model(config)
 
         self.embed_timestep = nn.Embedding(max_ep_len, hidden_size)
-        self.embed_return = torch.nn.Linear(1, hidden_size)
+        self.embed_return = torch.nn.Linear(reward_dim, hidden_size)
         self.embed_state = torch.nn.Linear(self.state_dim, hidden_size)
         self.embed_action = torch.nn.Linear(self.act_dim, hidden_size)
 
