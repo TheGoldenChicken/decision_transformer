@@ -42,19 +42,19 @@ def experiment(
     if env_name == 'hopper':
         env = gym.make('Hopper-v3')
         max_ep_len = 1000
-        env_targets = np.arange(1800, 3600+100, 100)
+        env_targets = np.arange(0, 1800+100, 100)
         # env_targets = [3600, 1800]  # evaluation conditioning targets
         scale = 1000.  # normalization for rewards/returns
     elif env_name == 'halfcheetah':
         env = gym.make('HalfCheetah-v3')
         max_ep_len = 1000
-        env_targets = np.arange(6000, 12000+400, 400)
+        env_targets = np.arange(0, 6000+400, 400)
         # env_targets = [12000, 6000]
         scale = 1000.
     elif env_name == 'walker2d':
         env = gym.make('Walker2d-v3')
         max_ep_len = 1000
-        env_targets = np.arange(2500, 5100+200, 200)
+        env_targets = np.arange(0, 2500+200, 200)
         # env_targets = [5000, 2500]
         scale = 1000.
     else:
