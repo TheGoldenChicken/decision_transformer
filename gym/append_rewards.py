@@ -1,71 +1,33 @@
 import pickle
-import os
 import numpy as np
-from sklearn.linear_model import LinearRegression
-
-datasets = ['halfcheetah-expert-v2.pkl',
-            'halfcheetah-medium-v2.pkl',
-            'halfcheetah-medium-replay.pkl',
-            'hopper-expert-v2.pkl',
-            'hopper-medium-v2.pkl',
-            'hopper-medium-replay-v2.pkl',
-            'walker2d-expert-v2.pkl',
-            'walker2d-medium-v2.pkl',
-            'walker2d-medium-replay-v2.pkl']
-
-data_string = datasets[0]
-
-with open('gym\\data\\' + data_string, 'rb') as f:
-    trajectories = pickle.load(f)
 
 
-dt = 1
 
+ctrl_coef = [-0.1,-1e-3,-1e-3] # Halfcheetah, hopper, walker2d
+alive_bonuses = [0, 1, 1] # Halfcheetah, hopper, walker2d
+environments = [['halfcheetah-expert-v2.pkl','halfcheetah-medium-v2.pkl', 'halfcheetah-medium_replay-v2.pkl'],
+                ['hopper-expert-v2.pkl', 'hopper-medium-v2.pkl', 'hopper-medium_replay-v2.pkl'],
+                ['walker2d-expert-v2.pkl', 'walker2d-medium-v2.pkl', 'walker2d-medium_replay-v2.pkl']]
 
-rewards = []
-dt = 0.05
-coef = []
-score = []
-for i, traj in enumerate(trajectories):
-
-    forward = traj['observations'][:,13]
-    alive = np.array(~traj['terminals'], dtype=int)
-    control = np.square(traj['actions'][:]).sum(axis = 1)
-    reward = traj['rewards']
-    
-    X = np.stack((forward, control, alive), axis=0).T
-
-    reg = LinearRegression().fit(X, reward)
-
-    r_score = reg.score(X, reward)
-    
-    coef.append(reg.coef_)
-    score.append(r_score)
-
-coef = np.array(coef)
-print(score)
-print(coef.mean(axis=0))
-
-# rewards = np.array(rewards)
-
-# print(np.array(rewards[0]).shape)
-# print(trajectories[:]['rewards'])
-
-# def get_coef(data_temp):
-
-#     forward_reward = data_temp['observations'][:,5]
-#     ctrl_cost = (data_temp['actions'] ** 2).sum(axis=1)
-#     healthy_reward = np.array(~data_temp['terminals'], dtype=int)
-
-#     target_reward = data_temp['rewards']
-
-
-#     X = np.stack((forward_reward, ctrl_cost, healthy_reward), axis=0).T
-
-#     reg = LinearRegression().fit(X, target_reward)
-
-#     r_score = reg.score(X, target_reward)
-    
-#     return reg.coef_, r_score # (forward_reward_weight, ctrl_cost_weight, healthy_reward), r_score
-
-# print(get_coef(trajectories[0]))
+for i, env_type in enumerate(environments):
+    for env in env_type:
+        # Unpickle the dataset
+        with open('gym\\data\\' + env, 'rb') as f:
+            dataset = pickle.load(f)
+            
+        # For all trajectories in the dataset
+        for iii, traj in enumerate(dataset):
+            reward = traj['rewards'] # Reward
+            alive = alive_bonuses[i]*np.ones(len(reward)) # Alive bonus
+            control = ctrl_coef[i]*np.square(traj['actions']).sum(axis = 1) # Control reward
+            
+            # Caulculate forward reward
+            forward = reward - control - alive 
+            
+            # Redefine reward
+            dataset[iii]['reward'] = [reward,forward,control]
+        
+        filename = env[:-4] + '-split-reward'
+        outfile = open(filename,'wb')
+        pickle.dump(dataset,outfile)
+        outfile.close()
