@@ -12,7 +12,7 @@ environments = [['halfcheetah-expert-v2.pkl','halfcheetah-medium-v2.pkl', 'halfc
 for i, env_type in enumerate(environments):
     for env in env_type:
         # Unpickle the dataset
-        with open('gym\\data\\' + env, 'rb') as f:
+        with open('data\\' + env, 'rb') as f:
             dataset = pickle.load(f)
             
         # For all trajectories in the dataset
@@ -27,7 +27,7 @@ for i, env_type in enumerate(environments):
             # Redefine reward
             dataset[iii]['reward'] = [reward,forward,control]
         
-        filename = env[:-4] + '-split-reward'
+        filename = env[:-4] + '-split-reward.pkl'
         outfile = open(filename,'wb')
         pickle.dump(dataset,outfile)
         outfile.close()
