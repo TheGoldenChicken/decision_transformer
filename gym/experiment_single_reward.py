@@ -37,7 +37,7 @@ def experiment(
 
 
     # Device and Wands and biases settings
-    device = variant.get('device', 'cpu')
+    device = variant.get('device', 'cuda')
     log_to_wandb = variant.get('log_to_wandb', False)
 
     # Getting datasets and creating names
@@ -306,7 +306,7 @@ if __name__ == '__main__':
     parser.add_argument('--dataset', type=str, default='medium')  # medium, medium-replay, medium-expert, expert
     parser.add_argument('--num_eval_episodes', type=int, default=100)
     parser.add_argument('--max_iters', type=int, default=10)
-    parser.add_argument('--device', type=str, default='cpu')
+    parser.add_argument('--device', type=str, default='cuda')
     parser.add_argument('--log_to_wandb', '-w', type=bool, default=False)
 
 
