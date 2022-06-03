@@ -29,6 +29,13 @@ def experiment(
         exp_prefix,
         variant,
 ):
+
+    # seeding
+    random.seed(variant['seed'])
+    np.random.seed(variant['seed'])
+    torch.manual_seed(variant['seed'])
+
+
     # Device and Wands and biases settings
     device = variant.get('device', 'cpu')
     log_to_wandb = variant.get('log_to_wandb', False)
@@ -36,26 +43,26 @@ def experiment(
     # Getting datasets and creating names
     env_name, dataset = variant['env'], variant['dataset']
     group_name = f'{exp_prefix}-{env_name}-{dataset}'
-    exp_prefix = f'{group_name}-{random.randint(int(1e5), int(1e6) - 1)}'
+    exp_prefix = f"{group_name}-{variant['seed']}"
 
 ################## DEFINE ENV ##################
 
     if env_name == 'hopper':
         env = gym.make('Hopper-v3')
         max_ep_len = 1000
-        env_targets = np.arange(1800, 3600+100, 100)
+        env_targets = np.linspace(18, 3192 * 1.5, 20)
         # env_targets = [3600, 1800]  # evaluation conditioning targets
         scale = 1000.  # normalization for rewards/returns
     elif env_name == 'halfcheetah':
         env = gym.make('HalfCheetah-v3')
         max_ep_len = 1000
-        env_targets = np.arange(6000, 12000+400, 400)
+        env_targets = np.linspace(-290, 4985*1.5, 20)
         # env_targets = [12000, 6000]
         scale = 1000.
     elif env_name == 'walker2d':
         env = gym.make('Walker2d-v3')
         max_ep_len = 1000
-        env_targets = np.arange(2500, 5100+200, 200)
+        env_targets = np.linspace(2, 4132*1.5, 20)
         # env_targets = [5000, 2500]
         scale = 1000.
     else:
@@ -254,7 +261,8 @@ def experiment(
         outputs = trainer.train_iteration(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
 
         if iter in save_iters:
-            path = variant['save_path'] + f'/iter{iter}-{group_name}'
+            # path = variant['save_path'] + f'/iter{iter}-{group_name}'
+            path = f"{variant['save_path']}/{env_name}/{dataset}/iter{iter}-{exp_prefix}"
 
             file = open(path + '-kwargs', 'wb')
             pickle.dump(model_kwargs, file)
@@ -265,9 +273,11 @@ def experiment(
 
         if iter in eval_iters:
             eval_outputs = trainer.evaluate(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
-            file = open(f'evaluation_data/iter{iter}-{exp_prefix}', 'wb')
+            # file = open(f'evaluation_data/iter{iter}-{exp_prefix}', 'wb')
+            file = open(f'evaluation_data/{env_name}/{dataset}/iter{iter}-{exp_prefix}', 'wb')
             pickle.dump(eval_outputs, file)
             file.close()
+
 
         if log_to_wandb:
             if iter in eval_iters:
@@ -314,6 +324,7 @@ if __name__ == '__main__':
     parser.add_argument('--weight_decay', '-wd', type=float, default=1e-4)
     parser.add_argument('--warmup_steps', type=int, default=10000)
     parser.add_argument('--mode', type=str, default='normal')
+    parser.add_argument('--seed', type=int, default=random.randint(int(1e5), int(1e6) - 1))
 
     args = parser.parse_args()
 
