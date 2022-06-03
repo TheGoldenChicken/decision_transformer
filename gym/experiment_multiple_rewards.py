@@ -68,16 +68,8 @@ def experiment(
     act_dim = env.action_space.shape[0]
 
     # load dataset
-<<<<<<< HEAD:gym/experiment_multiple_rewards.py
     directory_path = os.path.dirname(os.path.abspath(__file__))
     dataset_path = f'{directory_path}/data/{env_name}-{dataset}-v2-split-reward.pkl'
-=======
-    if variant['split_data'] == False:
-        dataset_path = f'data/{env_name}-{dataset}-v2.pkl'
-    else:
-        dataset_path = f'data/{env_name}-{dataset}-split-reward-v2.pkl'
-
->>>>>>> 5ed7c286ee6c14504779f5f6f4ac687df6cc0a3b:gym/experiment.py
     with open(dataset_path, 'rb') as f:
         trajectories = pickle.load(f)
         # trajectories is a list of dicts
