@@ -13,8 +13,12 @@ environments = [['halfcheetah-expert-v2.pkl','halfcheetah-medium-v2.pkl', 'halfc
 for i, env_type in enumerate(environments):
     for env in env_type:
         # Unpickle the dataset
+<<<<<<< HEAD
         directory_path = os.path.dirname(os.path.abspath(__file__))
         with open(f'{directory_path}/data/{env}', 'rb') as f:
+=======
+        with open('data\\' + env, 'rb') as f:
+>>>>>>> 5ed7c286ee6c14504779f5f6f4ac687df6cc0a3b
             dataset = pickle.load(f)
             
         # For all trajectories in the dataset
