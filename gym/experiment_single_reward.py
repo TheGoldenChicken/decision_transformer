@@ -8,11 +8,11 @@ import pickle
 import random
 import sys
 
-from decision_transformer.evaluation.evaluate_episodes import evaluate_episode_rtg
-from decision_transformer.models.decision_transformer import DecisionTransformer
-from decision_transformer.models.mlp_bc import MLPBCModel
-from decision_transformer.training.act_trainer import ActTrainer
-from decision_transformer.training.seq_trainer import SequenceTrainer
+from decision_transformer_single_reward.evaluation.evaluate_episodes import evaluate_episode_rtg
+from decision_transformer_single_reward.models.decision_transformer import DecisionTransformer
+from decision_transformer_single_reward.models.mlp_bc import MLPBCModel
+from decision_transformer_single_reward.training.act_trainer import ActTrainer
+from decision_transformer_single_reward.training.seq_trainer import SequenceTrainer
 
 from tqdm import tqdm
 
