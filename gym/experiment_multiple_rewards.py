@@ -7,6 +7,7 @@ import argparse
 import pickle
 import random
 import sys
+import os
 
 from decision_transformer.evaluation.evaluate_episodes import evaluate_episode_rtg
 from decision_transformer.models.decision_transformer import DecisionTransformer
@@ -67,7 +68,8 @@ def experiment(
     act_dim = env.action_space.shape[0]
 
     # load dataset
-    dataset_path = f'data/{env_name}-{dataset}-v2.pkl'
+    directory_path = os.path.dirname(os.path.abspath(__file__))
+    dataset_path = f'{directory_path}/data/{env_name}-{dataset}-v2-split-reward.pkl'
     with open(dataset_path, 'rb') as f:
         trajectories = pickle.load(f)
         # trajectories is a list of dicts
@@ -82,7 +84,7 @@ def experiment(
     for path in tqdm(trajectories):
         states.append(path['observations'])
         traj_lens.append(len(path['observations']))
-        returns.append(path['rewards'].sum())
+        returns.append(path['rewards'].sum()) # SKAL MÅSKE ÆNDRES
     traj_lens, returns = np.array(traj_lens), np.array(returns)
     # Traj lens are obviously just lens of single trajectory
     # Returns are end reward for all trajectories
@@ -124,7 +126,9 @@ def experiment(
             # Based on context length
             s.append(traj['observations'][si:si + max_len].reshape(1, -1, state_dim))
             a.append(traj['actions'][si:si + max_len].reshape(1, -1, act_dim)) # Just reshapes to have 'extra dimension'
-            r.append(traj['rewards'][si:si + max_len].reshape(1, -1, 1))
+            r.append(np.expand_dims(traj['reward'][:,si:si + max_len], 0)) # TODO: SØRG FOR AT REWARDS HAR DEN RIGTIGE SHAPE
+            r[-1] = np.swapaxes(r[-1], 1, 2) # Switches the last two axis
+
             # Not really sure about this? Probably some envs call them 'dones' rather than terminals... stupid, maybe gym vs mujoco?
             if 'terminals' in traj:
                 d.append(traj['terminals'][si:si + max_len].reshape(1, -1))
@@ -132,18 +136,23 @@ def experiment(
                 d.append(traj['dones'][si:si + max_len].reshape(1, -1))
             timesteps.append(np.arange(si, si + s[-1].shape[1]).reshape(1, -1))
             timesteps[-1][timesteps[-1] >= max_ep_len] = max_ep_len-1  # padding cutoff # remove stuff that is longer than max_ep_len allows
-            rtg.append(discount_cumsum(traj['rewards'][si:], gamma=1.)[:s[-1].shape[1] + 1].reshape(1, -1, 1)) # Only get reward to go in context length (+1 context length for some reason...)
+
+            rtg_i = []
+            for j in range(r[0].shape[2]):
+                rtg_i.append(discount_cumsum(traj['reward'][j,si:], gamma=1.)[:s[-1].shape[1] + 1].reshape(1, -1, 1)) # Only get reward to go in context length (+1 context length for some reason...)
+            rtg.append(np.squeeze(np.stack(rtg_i, axis=2), axis=3))
             if rtg[-1].shape[1] <= s[-1].shape[1]: # Some shape correction here.. don't know when states would ever be longer than reward to go
                 rtg[-1] = np.concatenate([rtg[-1], np.zeros((1, 1, 1))], axis=1)
 
             # padding and state + reward normalization
             tlen = s[-1].shape[1]
+            reward_dim = r[-1].shape[2]
             s[-1] = np.concatenate([np.zeros((1, max_len - tlen, state_dim)), s[-1]], axis=1)
             s[-1] = (s[-1] - state_mean) / state_std
             a[-1] = np.concatenate([np.ones((1, max_len - tlen, act_dim)) * -10., a[-1]], axis=1)
-            r[-1] = np.concatenate([np.zeros((1, max_len - tlen, 1)), r[-1]], axis=1)
+            r[-1] = np.concatenate([np.zeros((1, max_len - tlen, reward_dim)), r[-1]], axis=1)
             d[-1] = np.concatenate([np.ones((1, max_len - tlen)) * 2, d[-1]], axis=1)
-            rtg[-1] = np.concatenate([np.zeros((1, max_len - tlen, 1)), rtg[-1]], axis=1) / scale
+            rtg[-1] = np.concatenate([np.zeros((1, max_len - tlen, reward_dim)), rtg[-1]], axis=1) / scale
             timesteps[-1] = np.concatenate([np.zeros((1, max_len - tlen)), timesteps[-1]], axis=1)
             mask.append(np.concatenate([np.zeros((1, max_len - tlen)), np.ones((1, tlen))], axis=1))
 
@@ -199,12 +208,11 @@ def experiment(
 
         model = DecisionTransformer(**model_kwargs)
         model.load_state_dict(torch.load(path + '-model'))
-
     else:
         model_kwargs = {
             'state_dim'           : state_dim,
             'act_dim'             : act_dim,
-            'reward_dim'          : get_batch(1)[4].size(dim=2),
+            'reward_dim'          : get_batch(1)[4].size(dim=2), # Calculates the dimension of the reward from the data
             'max_length'          : variant['K'],
             'max_ep_len'          : max_ep_len,
             'hidden_size'         : variant['embed_dim'],
