@@ -29,9 +29,11 @@ def experiment(
         exp_prefix,
         variant,
 ):
+    # Device and Wands and biases settings
     device = variant.get('device', 'cpu')
     log_to_wandb = variant.get('log_to_wandb', False)
 
+    # Getting datasets and creating names
     env_name, dataset = variant['env'], variant['dataset']
     group_name = f'{exp_prefix}-{env_name}-{dataset}'
     exp_prefix = f'{group_name}-{random.randint(int(1e5), int(1e6) - 1)}'
