@@ -4,8 +4,8 @@ import torch.nn as nn
 
 import transformers
 
-from decision_transformer.models.model import TrajectoryModel
-from decision_transformer.models.trajectory_gpt2 import GPT2Model
+from decision_transformer_multiple_rewards.models.model import TrajectoryModel
+from decision_transformer_multiple_rewards.models.trajectory_gpt2 import GPT2Model
 
 
 class DecisionTransformer(TrajectoryModel):
@@ -26,6 +26,8 @@ class DecisionTransformer(TrajectoryModel):
             **kwargs
     ):
         super().__init__(state_dim, act_dim, max_length=max_length)
+
+        self.reward_dim = reward_dim
 
         self.hidden_size = hidden_size
         config = transformers.GPT2Config(
@@ -50,10 +52,9 @@ class DecisionTransformer(TrajectoryModel):
         self.predict_action = nn.Sequential(
             *([nn.Linear(hidden_size, self.act_dim)] + ([nn.Tanh()] if action_tanh else []))
         )
-        self.predict_return = torch.nn.Linear(hidden_size, 1)
+        self.predict_return = torch.nn.Linear(hidden_size, reward_dim)
 
     def forward(self, states, actions, rewards, returns_to_go, timesteps, attention_mask=None):
-
         batch_size, seq_length = states.shape[0], states.shape[1]
 
         if attention_mask is None:
@@ -106,7 +107,7 @@ class DecisionTransformer(TrajectoryModel):
 
         states = states.reshape(1, -1, self.state_dim)
         actions = actions.reshape(1, -1, self.act_dim)
-        returns_to_go = returns_to_go.reshape(1, -1, 1)
+        returns_to_go = returns_to_go.reshape(1, -1, self.reward_dim)
         timesteps = timesteps.reshape(1, -1)
 
         if self.max_length is not None:
@@ -126,7 +127,7 @@ class DecisionTransformer(TrajectoryModel):
                              device=actions.device), actions],
                 dim=1).to(dtype=torch.float32)
             returns_to_go = torch.cat(
-                [torch.zeros((returns_to_go.shape[0], self.max_length-returns_to_go.shape[1], 1), device=returns_to_go.device), returns_to_go],
+                [torch.zeros((returns_to_go.shape[0], self.max_length-returns_to_go.shape[1], self.reward_dim), device=returns_to_go.device), returns_to_go],
                 dim=1).to(dtype=torch.float32)
             timesteps = torch.cat(
                 [torch.zeros((timesteps.shape[0], self.max_length-timesteps.shape[1]), device=timesteps.device), timesteps],

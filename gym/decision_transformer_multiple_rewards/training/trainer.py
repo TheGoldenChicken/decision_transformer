@@ -50,7 +50,6 @@ class Trainer:
 
 
     def evaluate(self, num_steps, iter_num=0, print_logs=False):
-
         logs = dict()
         eval_start = time.time()
 
@@ -68,12 +67,16 @@ class Trainer:
             print('=' * 80)
             print(f'Iteration {iter_num}')
             for k, v in logs.items():
-                if k == 'time/evaluation':
+                print(k[-7:])
+                if k[-7:] == "lenghts":
+                    continue
+                elif k == 'time/evaluation':
                     print(f'{k}: {v}')
                 else:
                     target, statistic = k.split('_')
-                    print(f'target_{target}_{statistic[:-1]}_mean: {np.mean(v)}')
-                    print(f'target_{target}_{statistic[:-1]}_std: {np.std(v)}')
+                    v = torch.stack(v, dim=1)
+                    print(f'target_{target}_{statistic[:-1]}_mean: {torch.mean(v, dim=1)}')
+                    print(f'target_{target}_{statistic[:-1]}_std: {torch.std(v, dim=1)}')
 
         return logs
 

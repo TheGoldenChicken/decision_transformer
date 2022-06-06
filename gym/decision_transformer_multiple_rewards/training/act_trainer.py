@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 
-from decision_transformer.training.trainer import Trainer
+from decision_transformer_multiple_rewards.training.trainer import Trainer
 
 
 class ActTrainer(Trainer):

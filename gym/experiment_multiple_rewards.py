@@ -9,11 +9,11 @@ import random
 import sys
 import os
 
-from decision_transformer.evaluation.evaluate_episodes import evaluate_episode_rtg
-from decision_transformer.models.decision_transformer_multiple_rewards import DecisionTransformer
-from decision_transformer.models.mlp_bc import MLPBCModel
-from decision_transformer.training.act_trainer import ActTrainer
-from decision_transformer.training.seq_trainer import SequenceTrainer
+from decision_transformer_multiple_rewards.evaluation.evaluate_episodes import evaluate_episode_rtg
+from decision_transformer_multiple_rewards.models.decision_transformer_multiple_rewards import DecisionTransformer
+from decision_transformer_multiple_rewards.models.mlp_bc import MLPBCModel
+from decision_transformer_multiple_rewards.training.act_trainer import ActTrainer
+from decision_transformer_multiple_rewards.training.seq_trainer import SequenceTrainer
 
 from tqdm import tqdm
 
@@ -38,35 +38,6 @@ def experiment(
     pseudo_unique = random.randint(int(1e5), int(1e6) - 1)
     exp_prefix = f'{group_name}-{pseudo_unique}'
 
-################## DEFINE ENV ##################
-
-    if env_name == 'hopper':
-        env = gym.make('Hopper-v3')
-        max_ep_len = 1000
-        step = 100
-        env_targets = np.arange(0, 1800+100, step)
-        # env_targets = [3600, 1800]  # evaluation conditioning targets
-        scale = 1000.  # normalization for rewards/returns
-    elif env_name == 'halfcheetah':
-        env = gym.make('HalfCheetah-v3')
-        max_ep_len = 1000
-        step = 400
-        env_targets = np.arange(0, 6000+400, step)
-        # env_targets = [12000, 6000]
-        scale = 1000.
-    elif env_name == 'walker2d':
-        env = gym.make('Walker2d-v3')
-        max_ep_len = 1000
-        step = 200
-        env_targets = np.arange(0, 2500+200, step)
-        # env_targets = [5000, 2500]
-        scale = 1000.
-    else:
-        raise NotImplementedError
-
-    state_dim = env.observation_space.shape[0]
-    act_dim = env.action_space.shape[0]
-
     # load dataset
     directory_path = os.path.dirname(os.path.abspath(__file__))
     dataset_path = f'{directory_path}/data/{env_name}-{dataset}-v2-split-reward.pkl'
@@ -88,6 +59,39 @@ def experiment(
     traj_lens, returns = np.array(traj_lens), np.array(returns)
     # Traj lens are obviously just lens of single trajectory
     # Returns are end reward for all trajectories
+
+    reward_dim = trajectories[0]['reward'].shape[0] # Calculates the dimension of the reward from the data
+
+################## DEFINE ENV ##################
+
+    if env_name == 'hopper':
+        env = gym.make('Hopper-v3')
+        max_ep_len = 1000
+        step = 100
+        env_targets = np.swapaxes(np.array([np.arange(0, 1800+100, step) for _ in range(reward_dim)]), 0, 1)
+        # env_targets = [3600, 1800]  # evaluation conditioning targets
+        scale = 1000.  # normalization for rewards/returns
+    elif env_name == 'halfcheetah':
+        env = gym.make('HalfCheetah-v3')
+        max_ep_len = 1000
+        step = 400
+        env_targets = np.swapaxes(np.array([np.arange(0, 6000+400, step) for _ in range(reward_dim)]), 0, 1)
+        # env_targets = [12000, 6000]
+        scale = 1000.
+    elif env_name == 'walker2d':
+        env = gym.make('Walker2d-v3')
+        max_ep_len = 1000
+        step = 200
+        env_targets = np.swapaxes(np.array([np.arange(0, 2500+200, step) for _ in range(reward_dim)]), 0, 1)
+        # env_targets = [5000, 2500]
+        scale = 1000.
+    else:
+        raise NotImplementedError
+
+    state_dim = env.observation_space.shape[0]
+    act_dim = env.action_space.shape[0]
+
+    ################
 
     # used for input normalization
     states = np.concatenate(states, axis=0) # Flattens states along axis 0? # Check this code in debugger
@@ -126,7 +130,7 @@ def experiment(
             # Based on context length
             s.append(traj['observations'][si:si + max_len].reshape(1, -1, state_dim))
             a.append(traj['actions'][si:si + max_len].reshape(1, -1, act_dim)) # Just reshapes to have 'extra dimension'
-            r.append(np.expand_dims(traj['reward'][:,si:si + max_len], 0)) # TODO: SØRG FOR AT REWARDS HAR DEN RIGTIGE SHAPE
+            r.append(np.expand_dims(traj['reward'][:,si:si + max_len], 0))
             r[-1] = np.swapaxes(r[-1], 1, 2) # Switches the last two axis
 
             # Not really sure about this? Probably some envs call them 'dones' rather than terminals... stupid, maybe gym vs mujoco?
@@ -146,7 +150,7 @@ def experiment(
 
             # padding and state + reward normalization
             tlen = s[-1].shape[1]
-            reward_dim = r[-1].shape[2]
+            # reward_dim = r[-1].shape[2]
             s[-1] = np.concatenate([np.zeros((1, max_len - tlen, state_dim)), s[-1]], axis=1)
             s[-1] = (s[-1] - state_mean) / state_std
             a[-1] = np.concatenate([np.ones((1, max_len - tlen, act_dim)) * -10., a[-1]], axis=1)
@@ -178,6 +182,7 @@ def experiment(
                         env,
                         state_dim,
                         act_dim,
+                        reward_dim,
                         model,
                         max_ep_len=max_ep_len,
                         scale=scale,
@@ -212,7 +217,7 @@ def experiment(
         model_kwargs = {
             'state_dim'           : state_dim,
             'act_dim'             : act_dim,
-            'reward_dim'          : get_batch(1)[4].size(dim=2), # Calculates the dimension of the reward from the data
+            'reward_dim'          : reward_dim,
             'max_length'          : variant['K'],
             'max_ep_len'          : max_ep_len,
             'hidden_size'         : variant['embed_dim'],
@@ -291,8 +296,9 @@ def experiment(
                         outputs[k] = v
                     else:
                         target, statistic = k.split('_')
-                        outputs[f'evaluation/target_{target}_{statistic[:-1]}_mean'] = np.mean(v)
-                        outputs[f'evaluation/target_{target}_{statistic[:-1]}_std'] = np.std(v)
+                        v = torch.stack(v, dim=1)
+                        outputs[f'evaluation/target_{target}_{statistic[:-1]}_mean'] = torch.mean(v, dim=1)
+                        outputs[f'evaluation/target_{target}_{statistic[:-1]}_std'] = torch.std(v, dim=1)
 
             wandb.log(outputs)
 
@@ -309,7 +315,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--env', type=str, default='hopper')
     parser.add_argument('--dataset', type=str, default='medium')  # medium, medium-replay, medium-expert, expert
-    parser.add_argument('--num_eval_episodes', type=int, default=100)
+    parser.add_argument('--num_eval_episodes', type=int, default=2) # TODO: SKAL VÆRE 100
     parser.add_argument('--max_iters', type=int, default=10)
     parser.add_argument('--device', type=str, default='cpu')
     parser.add_argument('--log_to_wandb', '-w', type=bool, default=False)
@@ -330,7 +336,7 @@ if __name__ == '__main__':
     parser.add_argument('--warmup_steps', type=int, default=10000)
     parser.add_argument('--mode', type=str, default='normal')
 
-    parser.add_argument('split_reward', type=bool, default=False)
+    parser.add_argument('--split_reward', type=bool, default=False)
 
     args = parser.parse_args()
 

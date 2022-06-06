@@ -6,6 +6,7 @@ def evaluate_episode_rtg(
         env,
         state_dim,
         act_dim,
+        reward_dim,
         model,
         max_ep_len=1000,
         scale=1000.,
@@ -30,10 +31,10 @@ def evaluate_episode_rtg(
     # note that the latest action and reward will be "padding"
     states = torch.from_numpy(state).reshape(1, state_dim).to(device=device, dtype=torch.float32)
     actions = torch.zeros((0, act_dim), device=device, dtype=torch.float32)
-    rewards = torch.zeros(0, device=device, dtype=torch.float32)
+    rewards = torch.zeros((0, reward_dim), device=device, dtype=torch.float32)
 
     ep_return = target_return
-    target_return = torch.tensor(ep_return, device=device, dtype=torch.float32).reshape(1, 1)
+    target_return = torch.tensor(ep_return, device=device, dtype=torch.float32).reshape(1, 3)
     timesteps = torch.tensor(0, device=device, dtype=torch.long).reshape(1, 1)
 
     sim_states = []
@@ -43,7 +44,7 @@ def evaluate_episode_rtg(
 
         # add padding
         actions = torch.cat([actions, torch.zeros((1, act_dim), device=device)], dim=0)
-        rewards = torch.cat([rewards, torch.zeros(1, device=device)])
+        rewards = torch.cat([rewards, torch.zeros((1, reward_dim), device=device)])
 
         action = model.get_action(
             (states.to(dtype=torch.float32) - state_mean) / state_std,
@@ -56,17 +57,18 @@ def evaluate_episode_rtg(
         action = action.detach().cpu().numpy()
 
         state, reward, done, _ = env.step(action)
+        reward = torch.tensor([reward for _ in range(reward_dim)])
 
         cur_state = torch.from_numpy(state).to(device=device).reshape(1, state_dim)
         states = torch.cat([states, cur_state], dim=0)
         rewards[-1] = reward
 
         if mode != 'delayed':
-            pred_return = target_return[0,-1] - (reward/scale)
+            pred_return = target_return[0,-1] - (reward/scale) # MÅSKE FEJL HER
         else:
             pred_return = target_return[0,-1]
         target_return = torch.cat(
-            [target_return, pred_return.reshape(1, 1)], dim=1)
+            [target_return, pred_return.reshape(1, reward_dim)], dim=1)
         timesteps = torch.cat(
             [timesteps,
              torch.ones((1, 1), device=device, dtype=torch.long) * (t+1)], dim=1)
