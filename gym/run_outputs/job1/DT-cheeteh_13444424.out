@@ -1,0 +1,347 @@
+W&B enabled, running your script from this directory will now sync to the cloud.
+Disabling Weights & Biases. Run 'wandb login' again to re-enable.
+Creating states list
+==================================================
+Starting new experiment: walker2d expert
+1000 trajectories, 999214 timesteps found
+Average return: 4920.51, std: 136.39
+Max return: 5011.69, min: 763.42
+==================================================
+================================================================================
+Iteration 1
+time/training: 1477.6256334781647
+training/train_loss_mean: 0.10691410710327327
+training/train_loss_std: 0.12743190184672745
+training/action_error: 0.044907040894031525
+================================================================================
+Iteration 2
+time/training: 1482.665198802948
+training/train_loss_mean: 0.03873992210049182
+training/train_loss_std: 0.0031604677676462336
+training/action_error: 0.03656379133462906
+================================================================================
+Iteration 3
+time/training: 1476.019368648529
+training/train_loss_mean: 0.033688488276861606
+training/train_loss_std: 0.0017948616521774386
+training/action_error: 0.03426433727145195
+================================================================================
+Iteration 4
+time/training: 1498.310224056244
+training/train_loss_mean: 0.03171678461804986
+training/train_loss_std: 0.0015623538844490243
+training/action_error: 0.033465173095464706
+================================================================================
+Iteration 5
+time/training: 1479.1764018535614
+training/train_loss_mean: 0.030580106785707176
+training/train_loss_std: 0.0014630163316529975
+training/action_error: 0.03005879558622837
+================================================================================
+Iteration 5
+target_2500_return_mean: 4977.1918911661405
+target_2500_return_std: 29.601231584682537
+target_2500_lenght_mean: 1000.0
+target_2500_lenght_std: 0.0
+target_2700_return_mean: 4976.35568018596
+target_2700_return_std: 31.189293314915083
+target_2700_lenght_mean: 1000.0
+target_2700_lenght_std: 0.0
+target_2900_return_mean: 4982.412335181577
+target_2900_return_std: 26.8414223573363
+target_2900_lenght_mean: 1000.0
+target_2900_lenght_std: 0.0
+target_3100_return_mean: 4981.589917830323
+target_3100_return_std: 28.868463743629643
+target_3100_lenght_mean: 1000.0
+target_3100_lenght_std: 0.0
+target_3300_return_mean: 4984.081991498064
+target_3300_return_std: 27.437731479938183
+target_3300_lenght_mean: 1000.0
+target_3300_lenght_std: 0.0
+target_3500_return_mean: 4979.283142235549
+target_3500_return_std: 28.0980462116339
+target_3500_lenght_mean: 1000.0
+target_3500_lenght_std: 0.0
+target_3700_return_mean: 4982.179680168755
+target_3700_return_std: 31.297105396883186
+target_3700_lenght_mean: 1000.0
+target_3700_lenght_std: 0.0
+target_3900_return_mean: 4985.729825980735
+target_3900_return_std: 26.823538166146985
+target_3900_lenght_mean: 1000.0
+target_3900_lenght_std: 0.0
+target_4100_return_mean: 4981.1259461889085
+target_4100_return_std: 30.8069713711956
+target_4100_lenght_mean: 1000.0
+target_4100_lenght_std: 0.0
+target_4300_return_mean: 4980.017413361623
+target_4300_return_std: 31.986776260936807
+target_4300_lenght_mean: 1000.0
+target_4300_lenght_std: 0.0
+target_4500_return_mean: 4983.104871941047
+target_4500_return_std: 28.49925875317922
+target_4500_lenght_mean: 1000.0
+target_4500_lenght_std: 0.0
+target_4700_return_mean: 4979.700175927471
+target_4700_return_std: 28.610716908030614
+target_4700_lenght_mean: 1000.0
+target_4700_lenght_std: 0.0
+target_4900_return_mean: 4978.965671644364
+target_4900_return_std: 32.84992891861585
+target_4900_lenght_mean: 1000.0
+target_4900_lenght_std: 0.0
+target_5100_return_mean: 4981.905323726695
+target_5100_return_std: 31.39172576192993
+target_5100_lenght_mean: 1000.0
+target_5100_lenght_std: 0.0
+time/evaluation: 4052.4163451194763
+target_training/action_erro_mean: 0.03005879558622837
+target_training/action_erro_std: 0.0
+================================================================================
+Iteration 6
+time/training: 1446.3275876045227
+training/train_loss_mean: 0.029839317837171257
+training/train_loss_std: 0.001421078696144912
+training/action_error: 0.028525324538350105
+================================================================================
+Iteration 7
+time/training: 1449.549164056778
+training/train_loss_mean: 0.02926785180531442
+training/train_loss_std: 0.001377091853568118
+training/action_error: 0.03201226890087128
+================================================================================
+Iteration 8
+time/training: 1445.6286816596985
+training/train_loss_mean: 0.02887867155075073
+training/train_loss_std: 0.001361063511317396
+training/action_error: 0.03022361733019352
+================================================================================
+Iteration 9
+time/training: 1448.424639225006
+training/train_loss_mean: 0.028504757188633083
+training/train_loss_std: 0.001328633786818685
+training/action_error: 0.025984685868024826
+================================================================================
+Iteration 10
+time/training: 1446.2594628334045
+training/train_loss_mean: 0.028232845622301102
+training/train_loss_std: 0.0013190274001721799
+training/action_error: 0.02747226320207119
+================================================================================
+Iteration 10
+target_2500_return_mean: 4974.546030788489
+target_2500_return_std: 18.801598078745332
+target_2500_lenght_mean: 1000.0
+target_2500_lenght_std: 0.0
+target_2700_return_mean: 4971.94724737836
+target_2700_return_std: 22.13366379576438
+target_2700_lenght_mean: 1000.0
+target_2700_lenght_std: 0.0
+target_2900_return_mean: 4975.545756485755
+target_2900_return_std: 22.106820806232697
+target_2900_lenght_mean: 1000.0
+target_2900_lenght_std: 0.0
+target_3100_return_mean: 4974.660297878476
+target_3100_return_std: 22.27046579633052
+target_3100_lenght_mean: 1000.0
+target_3100_lenght_std: 0.0
+target_3300_return_mean: 4977.075860709473
+target_3300_return_std: 20.72559537855452
+target_3300_lenght_mean: 1000.0
+target_3300_lenght_std: 0.0
+target_3500_return_mean: 4977.93601370097
+target_3500_return_std: 20.865211971547552
+target_3500_lenght_mean: 1000.0
+target_3500_lenght_std: 0.0
+target_3700_return_mean: 4978.478837198131
+target_3700_return_std: 22.935369665932697
+target_3700_lenght_mean: 1000.0
+target_3700_lenght_std: 0.0
+target_3900_return_mean: 4976.269341153356
+target_3900_return_std: 20.468588145004983
+target_3900_lenght_mean: 1000.0
+target_3900_lenght_std: 0.0
+target_4100_return_mean: 4980.572607050434
+target_4100_return_std: 21.362581407006587
+target_4100_lenght_mean: 1000.0
+target_4100_lenght_std: 0.0
+target_4300_return_mean: 4979.576253630005
+target_4300_return_std: 20.287347268691796
+target_4300_lenght_mean: 1000.0
+target_4300_lenght_std: 0.0
+target_4500_return_mean: 4979.11731193439
+target_4500_return_std: 20.781887008073475
+target_4500_lenght_mean: 1000.0
+target_4500_lenght_std: 0.0
+target_4700_return_mean: 4980.497112340346
+target_4700_return_std: 20.222752043969003
+target_4700_lenght_mean: 1000.0
+target_4700_lenght_std: 0.0
+target_4900_return_mean: 4976.002026942834
+target_4900_return_std: 21.215231152755912
+target_4900_lenght_mean: 1000.0
+target_4900_lenght_std: 0.0
+target_5100_return_mean: 4980.682893429254
+target_5100_return_std: 20.18803690563859
+target_5100_lenght_mean: 1000.0
+target_5100_lenght_std: 0.0
+time/evaluation: 4067.9728503227234
+target_training/action_erro_mean: 0.02747226320207119
+target_training/action_erro_std: 0.0
+================================================================================
+Iteration 11
+time/training: 1456.6367089748383
+training/train_loss_mean: 0.027985931836999954
+training/train_loss_std: 0.0013056506870053304
+training/action_error: 0.027510643005371094
+================================================================================
+Iteration 12
+time/training: 1452.2843816280365
+training/train_loss_mean: 0.02776858263518661
+training/train_loss_std: 0.0012851941185095955
+training/action_error: 0.02848527580499649
+================================================================================
+Iteration 13
+time/training: 1450.2484414577484
+training/train_loss_mean: 0.027584298455528913
+training/train_loss_std: 0.0012794102188956658
+training/action_error: 0.02730947732925415
+================================================================================
+Iteration 14
+time/training: 1452.2922270298004
+training/train_loss_mean: 0.02742875959482044
+training/train_loss_std: 0.001267331626445044
+training/action_error: 0.026197655126452446
+================================================================================
+Iteration 15
+time/training: 1441.7832663059235
+training/train_loss_mean: 0.02728976378571242
+training/train_loss_std: 0.001256675335987859
+training/action_error: 0.026395151391625404
+================================================================================
+Iteration 15
+target_2500_return_mean: 4988.999245150881
+target_2500_return_std: 20.28687221870555
+target_2500_lenght_mean: 1000.0
+target_2500_lenght_std: 0.0
+target_2700_return_mean: 4990.311930956584
+target_2700_return_std: 19.339672127459735
+target_2700_lenght_mean: 1000.0
+target_2700_lenght_std: 0.0
+target_2900_return_mean: 4987.500970027151
+target_2900_return_std: 18.924595363981656
+target_2900_lenght_mean: 1000.0
+target_2900_lenght_std: 0.0
+target_3100_return_mean: 4985.831496558559
+target_3100_return_std: 21.041627963730644
+target_3100_lenght_mean: 1000.0
+target_3100_lenght_std: 0.0
+target_3300_return_mean: 4986.806670342386
+target_3300_return_std: 16.129025646816068
+target_3300_lenght_mean: 1000.0
+target_3300_lenght_std: 0.0
+target_3500_return_mean: 4989.276611828118
+target_3500_return_std: 18.98289212096279
+target_3500_lenght_mean: 1000.0
+target_3500_lenght_std: 0.0
+target_3700_return_mean: 4991.404481142112
+target_3700_return_std: 18.205275169173667
+target_3700_lenght_mean: 1000.0
+target_3700_lenght_std: 0.0
+target_3900_return_mean: 4991.7519917947675
+target_3900_return_std: 18.940883770551263
+target_3900_lenght_mean: 1000.0
+target_3900_lenght_std: 0.0
+target_4100_return_mean: 4992.138958224893
+target_4100_return_std: 21.029935151445343
+target_4100_lenght_mean: 1000.0
+target_4100_lenght_std: 0.0
+target_4300_return_mean: 4992.872982443212
+target_4300_return_std: 15.784184664025116
+target_4300_lenght_mean: 1000.0
+target_4300_lenght_std: 0.0
+target_4500_return_mean: 4993.550023348751
+target_4500_return_std: 18.072324540738748
+target_4500_lenght_mean: 1000.0
+target_4500_lenght_std: 0.0
+target_4700_return_mean: 4991.749168430035
+target_4700_return_std: 17.975982897301602
+target_4700_lenght_mean: 1000.0
+target_4700_lenght_std: 0.0
+target_4900_return_mean: 4990.683934709731
+target_4900_return_std: 18.510410102537687
+target_4900_lenght_mean: 1000.0
+target_4900_lenght_std: 0.0
+target_5100_return_mean: 4994.556032305817
+target_5100_return_std: 17.456392811505154
+target_5100_lenght_mean: 1000.0
+target_5100_lenght_std: 0.0
+time/evaluation: 4058.0064504146576
+target_training/action_erro_mean: 0.026395151391625404
+target_training/action_erro_std: 0.0
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 13444424: <DT-walker> in cluster <dcc> Done
+
+Job <DT-walker> was submitted from host <n-62-27-22> by user <s204131> in cluster <dcc> at Mon Apr 25 17:39:24 2022
+Job was executed on host(s) <4*n-62-20-2>, in queue <gpuv100>, as user <s204131> in cluster <dcc> at Mon Apr 25 17:56:04 2022
+</zhome/94/3/155767> was used as the home directory.
+</zhome/94/3/155767/decision_transformer/gym> was used as the working directory.
+Started at Mon Apr 25 17:56:04 2022
+Terminated at Tue Apr 26 03:24:45 2022
+Results reported at Tue Apr 26 03:24:45 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+#BSUB -J DT-walker
+#BSUB -o DT-cheeteh_%J.out
+#BSUB -e DT-cheeteh_%J.err
+#BSUB -q gpuv100
+#BSUB -gpu "num=1:mode=exclusive_process"
+#BSUB -n 4
+#BSUB -R "rusage[mem=4G]"
+#BSUB -R "span[hosts=1]"
+#BSUB -W 15:00
+# end of BSUB options
+
+
+# load CUDA (for GPU support)
+
+# activate the virtual environment
+source $HOME/miniconda3/envs/decision-transformer-gym/bin/activate
+
+wandb on
+echo 'cad8b043f3731a2c453efd8f61915e186ac93ac3' | wandb login
+
+python experiment.py --env 'walker2d' --dataset 'expert' --save_iters '5,10,11,12,13,14,15' --eval_iters '5,10,15' --max_iters 15 --device 'cuda' --log_to_wandb True
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   34489.65 sec.
+    Max Memory :                                 2608 MB
+    Average Memory :                             2597.51 MB
+    Total Requested Memory :                     16384.00 MB
+    Delta Memory :                               13776.00 MB
+    Max Swap :                                   -
+    Max Processes :                              6
+    Max Threads :                                21
+    Run time :                                   34121 sec.
+    Turnaround time :                            35121 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <DT-cheeteh_13444424.err> for stderr output of this job.
+
