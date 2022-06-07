@@ -312,7 +312,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--env', type=str, default='hopper')
     parser.add_argument('--dataset', type=str, default='medium')  # medium, medium-replay, medium-expert, expert
-    parser.add_argument('--num_eval_episodes', type=int, default=2) # TODO: SKAL VÆRE 100
+    parser.add_argument('--num_eval_episodes', type=int, default=100)
     parser.add_argument('--max_iters', type=int, default=10)
     parser.add_argument('--device', type=str, default='cpu')
     parser.add_argument('--log_to_wandb', '-w', type=bool, default=False)
@@ -321,7 +321,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--embed_dim', type=int, default=128)
 
-    parser.add_argument('--num_steps_per_iter', type=int, default=9) #TODO: SKAL VÆRE 10000
+    parser.add_argument('--num_steps_per_iter', type=int, default=10000)
     
     parser.add_argument('--K', type=int, default=20) # contect window
     parser.add_argument('--n_layer', type=int, default=3)
