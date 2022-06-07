@@ -146,7 +146,7 @@ def experiment(
                 rtg_i.append(discount_cumsum(traj['reward'][j,si:], gamma=1.)[:s[-1].shape[1] + 1].reshape(1, -1, 1)) # Only get reward to go in context length (+1 context length for some reason...)
             rtg.append(np.squeeze(np.stack(rtg_i, axis=2), axis=3))
             if rtg[-1].shape[1] <= s[-1].shape[1]: # Some shape correction here.. don't know when states would ever be longer than reward to go
-                rtg[-1] = np.concatenate([rtg[-1], np.zeros((1, 1, 1))], axis=1)
+                rtg[-1] = np.concatenate([rtg[-1], np.zeros((1, 1, reward_dim))], axis=1)
 
             # padding and state + reward normalization
             tlen = s[-1].shape[1]
@@ -269,23 +269,20 @@ def experiment(
     eval_iters = set(map(int, variant['eval_iters'].split(','))) if variant['eval_iters'] != '' else []
 
     for iter in range(1, variant['max_iters'] + 1):
-
         outputs = dict()
-        # outputs = trainer.train_iteration(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
+        outputs = trainer.train_iteration(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
 
         if iter in save_iters:
-            path = f"{variant['save_path']}{env_name}/{dataset}/iter{iter}-{exp_prefix}"
-
+            path = f"{directory_path}/{variant['save_path']}{env_name}/{dataset}/iter{iter}-{exp_prefix}"
             file = open(path + '-kwargs', 'wb')
             pickle.dump(model_kwargs, file)
             file.close()
-
             torch.save(trainer.model.state_dict(), path + '-model')
 
 
         if iter in eval_iters:
             eval_outputs = trainer.evaluate(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
-            file = open(f'evaluation_data/{env_name}/{dataset}/iter{iter}-{exp_prefix}', 'wb')
+            file = open(f'{directory_path}/evaluation_data/{env_name}/{dataset}/iter{iter}-{exp_prefix}.pkl', 'wb')
             pickle.dump(eval_outputs, file)
             file.close()
 
@@ -324,7 +321,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--embed_dim', type=int, default=128)
 
-    parser.add_argument('--num_steps_per_iter', type=int, default=10000)
+    parser.add_argument('--num_steps_per_iter', type=int, default=9) #TODO: SKAL VÆRE 10000
     
     parser.add_argument('--K', type=int, default=20) # contect window
     parser.add_argument('--n_layer', type=int, default=3)
