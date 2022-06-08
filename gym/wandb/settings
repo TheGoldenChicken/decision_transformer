@@ -1,6 +1,3 @@
 [default]
-entity = fagprojekt
-project = decision-transformer
-base_url = https://api.wandb.ai
 disabled = true
 
