@@ -40,7 +40,7 @@ def experiment(
 
     # load dataset
     directory_path = os.path.dirname(os.path.abspath(__file__))
-    dataset_path = f'{directory_path}/data/{env_name}-{dataset}-v2-split-reward.pkl'
+    dataset_path = f'{directory_path}/data/data_split_reward/{env_name}-{dataset}-v2.pkl'
     with open(dataset_path, 'rb') as f:
         trajectories = pickle.load(f)
         # trajectories is a list of dicts
@@ -60,7 +60,7 @@ def experiment(
     # Traj lens are obviously just lens of single trajectory
     # Returns are end reward for all trajectories
 
-    reward_dim = trajectories[0]['reward'].shape[0] # Calculates the dimension of the reward from the data
+    reward_dim = trajectories[0]['multi_rewards'].shape[0] # Calculates the dimension of the reward from the data
 
 ################## DEFINE ENV ##################
 
@@ -124,13 +124,13 @@ def experiment(
             # So this is a bit weird, because the way we create p_sample from traj_lens[sorted_inds], we are actually
             # sampling based on final return. That is trajectories[sorted_inds[900]] will have lower reward than if batch_inds = 1000...
             traj = trajectories[batch_inds[i]]
-            si = random.randint(0, traj['rewards'].shape[0] - 1) # Random number between 0 and len of trajectory - 1
+            si = random.randint(0, traj['multi_rewards'].shape[1] - 1) # Random number between 0 and len of trajectory - 1
 
             # get sequences from dataset
             # Based on context length
             s.append(traj['observations'][si:si + max_len].reshape(1, -1, state_dim))
             a.append(traj['actions'][si:si + max_len].reshape(1, -1, act_dim)) # Just reshapes to have 'extra dimension'
-            r.append(np.expand_dims(traj['reward'][:,si:si + max_len], 0))
+            r.append(np.expand_dims(traj['multi_rewards'][:,si:si + max_len], 0))
             r[-1] = np.swapaxes(r[-1], 1, 2) # Switches the last two axis
 
             # Not really sure about this? Probably some envs call them 'dones' rather than terminals... stupid, maybe gym vs mujoco?
@@ -143,7 +143,7 @@ def experiment(
 
             rtg_i = []
             for j in range(r[0].shape[2]):
-                rtg_i.append(discount_cumsum(traj['reward'][j,si:], gamma=1.)[:s[-1].shape[1] + 1].reshape(1, -1, 1)) # Only get reward to go in context length (+1 context length for some reason...)
+                rtg_i.append(discount_cumsum(traj['multi_rewards'][j,si:], gamma=1.)[:s[-1].shape[1] + 1].reshape(1, -1, 1)) # Only get reward to go in context length (+1 context length for some reason...)
             rtg.append(np.squeeze(np.stack(rtg_i, axis=2), axis=3))
             if rtg[-1].shape[1] <= s[-1].shape[1]: # Some shape correction here.. don't know when states would ever be longer than reward to go
                 rtg[-1] = np.concatenate([rtg[-1], np.zeros((1, 1, reward_dim))], axis=1)
@@ -310,9 +310,9 @@ if __name__ == '__main__':
     
     parser.add_argument('--eval_iters', type=str, default='1') # string like '5,10,15'
 
-    parser.add_argument('--env', type=str, default='hopper')
+    parser.add_argument('--env', type=str, default='halfcheetah')
     parser.add_argument('--dataset', type=str, default='medium')  # medium, medium-replay, medium-expert, expert
-    parser.add_argument('--num_eval_episodes', type=int, default=100)
+    parser.add_argument('--num_eval_episodes', type=int, default=2) # 100
     parser.add_argument('--max_iters', type=int, default=10)
     parser.add_argument('--device', type=str, default='cpu')
     parser.add_argument('--log_to_wandb', '-w', type=bool, default=False)
@@ -321,7 +321,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--embed_dim', type=int, default=128)
 
-    parser.add_argument('--num_steps_per_iter', type=int, default=10000)
+    parser.add_argument('--num_steps_per_iter', type=int, default=10) #10000
     
     parser.add_argument('--K', type=int, default=20) # contect window
     parser.add_argument('--n_layer', type=int, default=3)
@@ -330,7 +330,7 @@ if __name__ == '__main__':
     parser.add_argument('--dropout', type=float, default=0.1)
     parser.add_argument('--learning_rate', '-lr', type=float, default=1e-4)
     parser.add_argument('--weight_decay', '-wd', type=float, default=1e-4)
-    parser.add_argument('--warmup_steps', type=int, default=10000)
+    parser.add_argument('--warmup_steps', type=int, default=10_000)
     parser.add_argument('--mode', type=str, default='normal')
 
     parser.add_argument('--split_reward', type=bool, default=False)
