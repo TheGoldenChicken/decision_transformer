@@ -5,7 +5,6 @@ import time
 
 
 class Trainer:
-
     def __init__(self, model, optimizer, batch_size, get_batch, loss_fn, scheduler=None, eval_fns=None):
         self.model = model
         self.optimizer = optimizer
@@ -19,7 +18,6 @@ class Trainer:
         self.start_time = time.time()
 
     def train_iteration(self, num_steps, iter_num=0, print_logs=False):
-
         train_losses = []
         logs = dict()
 
@@ -68,11 +66,9 @@ class Trainer:
             print(f'Iteration {iter_num}')
             for k, v in logs.items():
                 print(k[-7:])
-                if k[-7:] == "lenghts":
-                    continue
-                elif k == 'time/evaluation':
+                if k == 'time/evaluation':
                     print(f'{k}: {v}')
-                else:
+                elif k[-7:] == 'returns':
                     target, statistic = k.split('_')
                     v = torch.stack(v, dim=1)
                     print(f'target_{target}_{statistic[:-1]}_mean: {torch.mean(v, dim=1)}')

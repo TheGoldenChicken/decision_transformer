@@ -30,17 +30,25 @@ def experiment(
         exp_prefix,
         variant,
 ):
-    device = variant.get('device', 'cpu')
+
+    
+    # seeding
+    random.seed(variant['seed'])
+    np.random.seed(variant['seed'])
+    torch.manual_seed(variant['seed'])
+
+    # Device and Wands and biases settings
+    device = variant.get('device', 'cuda')
     log_to_wandb = variant.get('log_to_wandb', False)
 
+    # Getting datasets and creating names
     env_name, dataset = variant['env'], variant['dataset']
     group_name = f'{exp_prefix}-{env_name}-{dataset}'
-    pseudo_unique = random.randint(int(1e5), int(1e6) - 1)
-    exp_prefix = f'{group_name}-{pseudo_unique}'
+    exp_prefix = f"{group_name}-{variant['seed']}"
 
     # load dataset
     directory_path = os.path.dirname(os.path.abspath(__file__))
-    dataset_path = f'{directory_path}/data/{env_name}-{dataset}-v2-split-reward.pkl'
+    dataset_path = f'{directory_path}/data_split_reward/{env_name}-{dataset}-v2.pkl'
     with open(dataset_path, 'rb') as f:
         trajectories = pickle.load(f)
         # trajectories is a list of dicts
@@ -60,7 +68,7 @@ def experiment(
     # Traj lens are obviously just lens of single trajectory
     # Returns are end reward for all trajectories
 
-    reward_dim = trajectories[0]['reward'].shape[0] # Calculates the dimension of the reward from the data
+    reward_dim = trajectories[0]['multi_rewards'].shape[0] # Calculates the dimension of the reward from the data
 
 ################## DEFINE ENV ##################
 
@@ -68,25 +76,32 @@ def experiment(
         env = gym.make('Hopper-v3')
         max_ep_len = 1000
         step = 100
-        env_targets = np.swapaxes(np.array([np.arange(0, 1800+100, step) for _ in range(reward_dim)]), 0, 1)
+        # env_targets = np.swapaxes(np.array([np.arange(0, 1800+100, step) for _ in range(reward_dim)]), 0, 1)
         # env_targets = [3600, 1800]  # evaluation conditioning targets
         scale = 1000.  # normalization for rewards/returns
     elif env_name == 'halfcheetah':
         env = gym.make('HalfCheetah-v3')
         max_ep_len = 1000
         step = 400
-        env_targets = np.swapaxes(np.array([np.arange(0, 6000+400, step) for _ in range(reward_dim)]), 0, 1)
+        # env_targets = np.swapaxes(np.array([np.arange(0, 6000+400, step) for _ in range(reward_dim)]), 0, 1)
         # env_targets = [12000, 6000]
         scale = 1000.
     elif env_name == 'walker2d':
         env = gym.make('Walker2d-v3')
         max_ep_len = 1000
         step = 200
-        env_targets = np.swapaxes(np.array([np.arange(0, 2500+200, step) for _ in range(reward_dim)]), 0, 1)
+        # env_targets = np.swapaxes(np.array([np.arange(0, 2500+200, step) for _ in range(reward_dim)]), 0, 1)
         # env_targets = [5000, 2500]
         scale = 1000.
     else:
         raise NotImplementedError
+
+    # vi laver grid 10x10 for target rewards
+    max_forward_reward, max_ctrl_cost = np.array([traj['multi_rewards'].sum(axis=1) for traj in trajectories]).max(axis=0)
+
+    forward_rewards = np.linspace(0, 1.5 * max_forward_reward, 10, endpoint=True)
+    ctrl_costs = np.linspace(0, 1.5 * max_ctrl_cost, 10, endpoint=True)
+    env_targets = np.array([[forward_reward, ctrl_cost] for forward_reward in forward_rewards for ctrl_cost in ctrl_costs])
 
     state_dim = env.observation_space.shape[0]
     act_dim = env.action_space.shape[0]
@@ -124,13 +139,13 @@ def experiment(
             # So this is a bit weird, because the way we create p_sample from traj_lens[sorted_inds], we are actually
             # sampling based on final return. That is trajectories[sorted_inds[900]] will have lower reward than if batch_inds = 1000...
             traj = trajectories[batch_inds[i]]
-            si = random.randint(0, traj['rewards'].shape[0] - 1) # Random number between 0 and len of trajectory - 1
+            si = random.randint(0, traj['multi_rewards'].shape[1] - 1) # Random number between 0 and len of trajectory - 1
 
             # get sequences from dataset
             # Based on context length
             s.append(traj['observations'][si:si + max_len].reshape(1, -1, state_dim))
             a.append(traj['actions'][si:si + max_len].reshape(1, -1, act_dim)) # Just reshapes to have 'extra dimension'
-            r.append(np.expand_dims(traj['reward'][:,si:si + max_len], 0))
+            r.append(np.expand_dims(traj['multi_rewards'][:,si:si + max_len], 0))
             r[-1] = np.swapaxes(r[-1], 1, 2) # Switches the last two axis
 
             # Not really sure about this? Probably some envs call them 'dones' rather than terminals... stupid, maybe gym vs mujoco?
@@ -143,10 +158,10 @@ def experiment(
 
             rtg_i = []
             for j in range(r[0].shape[2]):
-                rtg_i.append(discount_cumsum(traj['reward'][j,si:], gamma=1.)[:s[-1].shape[1] + 1].reshape(1, -1, 1)) # Only get reward to go in context length (+1 context length for some reason...)
+                rtg_i.append(discount_cumsum(traj['multi_rewards'][j,si:], gamma=1.)[:s[-1].shape[1] + 1].reshape(1, -1, 1)) # Only get reward to go in context length (+1 context length for some reason...)
             rtg.append(np.squeeze(np.stack(rtg_i, axis=2), axis=3))
             if rtg[-1].shape[1] <= s[-1].shape[1]: # Some shape correction here.. don't know when states would ever be longer than reward to go
-                rtg[-1] = np.concatenate([rtg[-1], np.zeros((1, 1, 1))], axis=1)
+                rtg[-1] = np.concatenate([rtg[-1], np.zeros((1, 1, reward_dim))], axis=1)
 
             # padding and state + reward normalization
             tlen = s[-1].shape[1]
@@ -269,23 +284,20 @@ def experiment(
     eval_iters = set(map(int, variant['eval_iters'].split(','))) if variant['eval_iters'] != '' else []
 
     for iter in range(1, variant['max_iters'] + 1):
-
         outputs = dict()
-        # outputs = trainer.train_iteration(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
+        outputs = trainer.train_iteration(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
 
         if iter in save_iters:
-            path = f"{variant['save_path']}{env_name}/{dataset}/iter{iter}-{exp_prefix}"
-
+            path = f"{directory_path}/{variant['save_path']}{env_name}/{dataset}/iter{iter}-{exp_prefix}"
             file = open(path + '-kwargs', 'wb')
             pickle.dump(model_kwargs, file)
             file.close()
-
             torch.save(trainer.model.state_dict(), path + '-model')
 
 
         if iter in eval_iters:
             eval_outputs = trainer.evaluate(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
-            file = open(f'evaluation_data/{env_name}/{dataset}/iter{iter}-{exp_prefix}', 'wb')
+            file = open(f'{directory_path}/evaluation_data/{env_name}/{dataset}/iter{iter}-{exp_prefix}.pkl', 'wb')
             pickle.dump(eval_outputs, file)
             file.close()
 
@@ -313,9 +325,9 @@ if __name__ == '__main__':
     
     parser.add_argument('--eval_iters', type=str, default='1') # string like '5,10,15'
 
-    parser.add_argument('--env', type=str, default='hopper')
+    parser.add_argument('--env', type=str, default='halfcheetah')
     parser.add_argument('--dataset', type=str, default='medium')  # medium, medium-replay, medium-expert, expert
-    parser.add_argument('--num_eval_episodes', type=int, default=2) # TODO: SKAL VÆRE 100
+    parser.add_argument('--num_eval_episodes', type=int, default=2) # 100
     parser.add_argument('--max_iters', type=int, default=10)
     parser.add_argument('--device', type=str, default='cpu')
     parser.add_argument('--log_to_wandb', '-w', type=bool, default=False)
@@ -324,7 +336,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--embed_dim', type=int, default=128)
 
-    parser.add_argument('--num_steps_per_iter', type=int, default=10000)
+    parser.add_argument('--num_steps_per_iter', type=int, default=10) #10000
     
     parser.add_argument('--K', type=int, default=20) # contect window
     parser.add_argument('--n_layer', type=int, default=3)
@@ -333,11 +345,12 @@ if __name__ == '__main__':
     parser.add_argument('--dropout', type=float, default=0.1)
     parser.add_argument('--learning_rate', '-lr', type=float, default=1e-4)
     parser.add_argument('--weight_decay', '-wd', type=float, default=1e-4)
-    parser.add_argument('--warmup_steps', type=int, default=10000)
+    parser.add_argument('--warmup_steps', type=int, default=10_000)
     parser.add_argument('--mode', type=str, default='normal')
+    parser.add_argument('--seed', type=int, default=random.randint(int(1e5), int(1e6) - 1))
 
     parser.add_argument('--split_reward', type=bool, default=False)
 
     args = parser.parse_args()
 
-    experiment('gym-experiment', variant=vars(args))
+    experiment('gym-experiment_multi', variant=vars(args))

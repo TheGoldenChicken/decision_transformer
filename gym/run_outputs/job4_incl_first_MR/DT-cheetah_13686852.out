@@ -1,0 +1,571 @@
+W&B enabled, running your script from this directory will now sync to the cloud.
+Disabling Weights & Biases. Run 'wandb login' again to re-enable.
+Creating states list
+==================================================
+Starting new experiment: halfcheetah medium_replay
+202 trajectories, 202000 timesteps found
+Average return: 3093.29, std: 1680.69
+Max return: 4985.14, min: -638.49
+==================================================
+================================================================================
+Iteration 1
+time/training: 1399.349223613739
+training/train_loss_mean: 0.2350239909887314
+training/train_loss_std: 0.12912769815845088
+training/action_error: 0.14247876405715942
+================================================================================
+Iteration 2
+time/training: 1503.6987233161926
+training/train_loss_mean: 0.13079830296859146
+training/train_loss_std: 0.016698233807862145
+training/action_error: 0.08791658282279968
+================================================================================
+Iteration 3
+time/training: 1800.9045104980469
+training/train_loss_mean: 0.11251343584135175
+training/train_loss_std: 0.013732310377652338
+training/action_error: 0.11454422026872635
+================================================================================
+Iteration 4
+time/training: 1806.4600222110748
+training/train_loss_mean: 0.10268379872962832
+training/train_loss_std: 0.012613228216112127
+training/action_error: 0.08825207501649857
+================================================================================
+Iteration 5
+time/training: 1649.1140325069427
+training/train_loss_mean: 0.09659202169179916
+training/train_loss_std: 0.011659690783963369
+training/action_error: 0.116287961602211
+================================================================================
+Iteration 6
+time/training: 1709.6170699596405
+training/train_loss_mean: 0.09213180246502162
+training/train_loss_std: 0.011025194924404793
+training/action_error: 0.1157054677605629
+================================================================================
+Iteration 7
+time/training: 1759.4266469478607
+training/train_loss_mean: 0.08797474249079823
+training/train_loss_std: 0.010329284912073432
+training/action_error: 0.07146561145782471
+================================================================================
+Iteration 8
+time/training: 1710.1813111305237
+training/train_loss_mean: 0.08500512409768998
+training/train_loss_std: 0.009708140392238171
+training/action_error: 0.07140974700450897
+================================================================================
+Iteration 8
+target_-290.0_return_mean: -186.6722941553626
+target_-290.0_return_std: 12.906506758144493
+target_-290.0_lenght_mean: 1000.0
+target_-290.0_lenght_std: 0.0
+target_118.81578947368422_return_mean: 540.5919405597222
+target_118.81578947368422_return_std: 800.2597166754434
+target_118.81578947368422_lenght_mean: 1000.0
+target_118.81578947368422_lenght_std: 0.0
+target_527.6315789473684_return_mean: 1444.2317501598122
+target_527.6315789473684_return_std: 1043.6301530429228
+target_527.6315789473684_lenght_mean: 1000.0
+target_527.6315789473684_lenght_std: 0.0
+target_936.4473684210527_return_mean: 2090.1492688093012
+target_936.4473684210527_return_std: 874.5923662163467
+target_936.4473684210527_lenght_mean: 1000.0
+target_936.4473684210527_lenght_std: 0.0
+target_1345.2631578947369_return_mean: 2283.8750320835265
+target_1345.2631578947369_return_std: 802.2642694833331
+target_1345.2631578947369_lenght_mean: 1000.0
+target_1345.2631578947369_lenght_std: 0.0
+target_1754.078947368421_return_mean: 2687.7370586954225
+target_1754.078947368421_return_std: 566.1050651491933
+target_1754.078947368421_lenght_mean: 1000.0
+target_1754.078947368421_lenght_std: 0.0
+target_2162.8947368421054_return_mean: 2887.4604476853424
+target_2162.8947368421054_return_std: 396.1396519369413
+target_2162.8947368421054_lenght_mean: 1000.0
+target_2162.8947368421054_lenght_std: 0.0
+target_2571.7105263157896_return_mean: 3170.9788754664755
+target_2571.7105263157896_return_std: 427.6031254882903
+target_2571.7105263157896_lenght_mean: 1000.0
+target_2571.7105263157896_lenght_std: 0.0
+target_2980.5263157894738_return_mean: 3378.1664273226424
+target_2980.5263157894738_return_std: 446.6276926825057
+target_2980.5263157894738_lenght_mean: 1000.0
+target_2980.5263157894738_lenght_std: 0.0
+target_3389.342105263158_return_mean: 3728.8850123671805
+target_3389.342105263158_return_std: 555.2601150266596
+target_3389.342105263158_lenght_mean: 1000.0
+target_3389.342105263158_lenght_std: 0.0
+target_3798.157894736842_return_mean: 3945.7978030247336
+target_3798.157894736842_return_std: 811.6537597742765
+target_3798.157894736842_lenght_mean: 1000.0
+target_3798.157894736842_lenght_std: 0.0
+target_4206.973684210527_return_mean: 4209.812753688252
+target_4206.973684210527_return_std: 659.8579951304729
+target_4206.973684210527_lenght_mean: 1000.0
+target_4206.973684210527_lenght_std: 0.0
+target_4615.789473684211_return_mean: 4135.730137131558
+target_4615.789473684211_return_std: 831.7177857706156
+target_4615.789473684211_lenght_mean: 1000.0
+target_4615.789473684211_lenght_std: 0.0
+target_5024.605263157895_return_mean: 4086.0426860702373
+target_5024.605263157895_return_std: 962.2334672290174
+target_5024.605263157895_lenght_mean: 1000.0
+target_5024.605263157895_lenght_std: 0.0
+target_5433.421052631579_return_mean: 4048.5674466712017
+target_5433.421052631579_return_std: 910.3218501682157
+target_5433.421052631579_lenght_mean: 1000.0
+target_5433.421052631579_lenght_std: 0.0
+target_5842.236842105263_return_mean: 4031.6532564052322
+target_5842.236842105263_return_std: 928.5074448734329
+target_5842.236842105263_lenght_mean: 1000.0
+target_5842.236842105263_lenght_std: 0.0
+target_6251.0526315789475_return_mean: 4086.2396096836264
+target_6251.0526315789475_return_std: 839.8219558075375
+target_6251.0526315789475_lenght_mean: 1000.0
+target_6251.0526315789475_lenght_std: 0.0
+target_6659.868421052632_return_mean: 4061.4641105949604
+target_6659.868421052632_return_std: 897.2737323979602
+target_6659.868421052632_lenght_mean: 1000.0
+target_6659.868421052632_lenght_std: 0.0
+target_7068.684210526316_return_mean: 4049.673994358321
+target_7068.684210526316_return_std: 906.4987376366101
+target_7068.684210526316_lenght_mean: 1000.0
+target_7068.684210526316_lenght_std: 0.0
+target_7477.5_return_mean: 4076.2176202697087
+target_7477.5_return_std: 802.1330598236494
+target_7477.5_lenght_mean: 1000.0
+target_7477.5_lenght_std: 0.0
+time/evaluation: 7200.86385679245
+target_training/action_erro_mean: 0.07140974700450897
+target_training/action_erro_std: 0.0
+================================================================================
+Iteration 9
+time/training: 1800.7376503944397
+training/train_loss_mean: 0.08213828452453018
+training/train_loss_std: 0.009108894718281923
+training/action_error: 0.06712204962968826
+================================================================================
+Iteration 9
+target_-290.0_return_mean: -209.3732438578062
+target_-290.0_return_std: 15.72363000066232
+target_-290.0_lenght_mean: 1000.0
+target_-290.0_lenght_std: 0.0
+target_118.81578947368422_return_mean: 540.0523983492425
+target_118.81578947368422_return_std: 611.7613175509046
+target_118.81578947368422_lenght_mean: 1000.0
+target_118.81578947368422_lenght_std: 0.0
+target_527.6315789473684_return_mean: 1160.6870561339977
+target_527.6315789473684_return_std: 962.7341826496449
+target_527.6315789473684_lenght_mean: 1000.0
+target_527.6315789473684_lenght_std: 0.0
+target_936.4473684210527_return_mean: 1812.4339979607623
+target_936.4473684210527_return_std: 909.0518918196467
+target_936.4473684210527_lenght_mean: 1000.0
+target_936.4473684210527_lenght_std: 0.0
+target_1345.2631578947369_return_mean: 2204.8901624915156
+target_1345.2631578947369_return_std: 790.4789724580472
+target_1345.2631578947369_lenght_mean: 1000.0
+target_1345.2631578947369_lenght_std: 0.0
+target_1754.078947368421_return_mean: 2679.259439379844
+target_1754.078947368421_return_std: 608.5881368608528
+target_1754.078947368421_lenght_mean: 1000.0
+target_1754.078947368421_lenght_std: 0.0
+target_2162.8947368421054_return_mean: 2878.3669778811145
+target_2162.8947368421054_return_std: 416.80538600306846
+target_2162.8947368421054_lenght_mean: 1000.0
+target_2162.8947368421054_lenght_std: 0.0
+target_2571.7105263157896_return_mean: 3208.7150268084974
+target_2571.7105263157896_return_std: 354.1208436344839
+target_2571.7105263157896_lenght_mean: 1000.0
+target_2571.7105263157896_lenght_std: 0.0
+target_2980.5263157894738_return_mean: 3502.0674485097857
+target_2980.5263157894738_return_std: 320.8955206641857
+target_2980.5263157894738_lenght_mean: 1000.0
+target_2980.5263157894738_lenght_std: 0.0
+target_3389.342105263158_return_mean: 3944.3716622944376
+target_3389.342105263158_return_std: 308.2077217995456
+target_3389.342105263158_lenght_mean: 1000.0
+target_3389.342105263158_lenght_std: 0.0
+target_3798.157894736842_return_mean: 4264.178602381099
+target_3798.157894736842_return_std: 351.0829673446339
+target_3798.157894736842_lenght_mean: 1000.0
+target_3798.157894736842_lenght_std: 0.0
+target_4206.973684210527_return_mean: 4264.632125067266
+target_4206.973684210527_return_std: 665.1812389910842
+target_4206.973684210527_lenght_mean: 1000.0
+target_4206.973684210527_lenght_std: 0.0
+target_4615.789473684211_return_mean: 4254.633674084169
+target_4615.789473684211_return_std: 800.109592044314
+target_4615.789473684211_lenght_mean: 1000.0
+target_4615.789473684211_lenght_std: 0.0
+target_5024.605263157895_return_mean: 4304.71341517619
+target_5024.605263157895_return_std: 659.4100531487204
+target_5024.605263157895_lenght_mean: 1000.0
+target_5024.605263157895_lenght_std: 0.0
+target_5433.421052631579_return_mean: 4288.343265867271
+target_5433.421052631579_return_std: 443.3853083451627
+target_5433.421052631579_lenght_mean: 1000.0
+target_5433.421052631579_lenght_std: 0.0
+target_5842.236842105263_return_mean: 4225.296538900637
+target_5842.236842105263_return_std: 712.3374615356232
+target_5842.236842105263_lenght_mean: 1000.0
+target_5842.236842105263_lenght_std: 0.0
+target_6251.0526315789475_return_mean: 4110.963397062873
+target_6251.0526315789475_return_std: 830.7420524991309
+target_6251.0526315789475_lenght_mean: 1000.0
+target_6251.0526315789475_lenght_std: 0.0
+target_6659.868421052632_return_mean: 4139.015398611631
+target_6659.868421052632_return_std: 813.3018603891787
+target_6659.868421052632_lenght_mean: 1000.0
+target_6659.868421052632_lenght_std: 0.0
+target_7068.684210526316_return_mean: 3942.3819090461357
+target_7068.684210526316_return_std: 1054.8451654475018
+target_7068.684210526316_lenght_mean: 1000.0
+target_7068.684210526316_lenght_std: 0.0
+target_7477.5_return_mean: 4207.750220717065
+target_7477.5_return_std: 640.00775531757
+target_7477.5_lenght_mean: 1000.0
+target_7477.5_lenght_std: 0.0
+time/evaluation: 5864.268652200699
+target_training/action_erro_mean: 0.06712204962968826
+target_training/action_erro_std: 0.0
+================================================================================
+Iteration 10
+time/training: 1426.8684828281403
+training/train_loss_mean: 0.0797308776497841
+training/train_loss_std: 0.008665532448660728
+training/action_error: 0.08774930983781815
+================================================================================
+Iteration 10
+target_-290.0_return_mean: -273.3483455731846
+target_-290.0_return_std: 29.593357317583916
+target_-290.0_lenght_mean: 1000.0
+target_-290.0_lenght_std: 0.0
+target_118.81578947368422_return_mean: 938.5779528557898
+target_118.81578947368422_return_std: 666.1203398945132
+target_118.81578947368422_lenght_mean: 1000.0
+target_118.81578947368422_lenght_std: 0.0
+target_527.6315789473684_return_mean: 1331.3727012820302
+target_527.6315789473684_return_std: 1033.7979691192475
+target_527.6315789473684_lenght_mean: 1000.0
+target_527.6315789473684_lenght_std: 0.0
+target_936.4473684210527_return_mean: 1887.6385799504435
+target_936.4473684210527_return_std: 944.0122734108518
+target_936.4473684210527_lenght_mean: 1000.0
+target_936.4473684210527_lenght_std: 0.0
+target_1345.2631578947369_return_mean: 2538.696337140057
+target_1345.2631578947369_return_std: 585.8524518661035
+target_1345.2631578947369_lenght_mean: 1000.0
+target_1345.2631578947369_lenght_std: 0.0
+target_1754.078947368421_return_mean: 2751.3001143619877
+target_1754.078947368421_return_std: 613.4742396219755
+target_1754.078947368421_lenght_mean: 1000.0
+target_1754.078947368421_lenght_std: 0.0
+target_2162.8947368421054_return_mean: 3069.7372290582757
+target_2162.8947368421054_return_std: 397.49049940932366
+target_2162.8947368421054_lenght_mean: 1000.0
+target_2162.8947368421054_lenght_std: 0.0
+target_2571.7105263157896_return_mean: 3317.10174720851
+target_2571.7105263157896_return_std: 468.17529091529417
+target_2571.7105263157896_lenght_mean: 1000.0
+target_2571.7105263157896_lenght_std: 0.0
+target_2980.5263157894738_return_mean: 3815.3485326787877
+target_2980.5263157894738_return_std: 329.39866267716195
+target_2980.5263157894738_lenght_mean: 1000.0
+target_2980.5263157894738_lenght_std: 0.0
+target_3389.342105263158_return_mean: 4031.5194738204677
+target_3389.342105263158_return_std: 588.8559961610467
+target_3389.342105263158_lenght_mean: 1000.0
+target_3389.342105263158_lenght_std: 0.0
+target_3798.157894736842_return_mean: 4148.436593176088
+target_3798.157894736842_return_std: 718.6816852120993
+target_3798.157894736842_lenght_mean: 1000.0
+target_3798.157894736842_lenght_std: 0.0
+target_4206.973684210527_return_mean: 4292.433419164779
+target_4206.973684210527_return_std: 477.56287101159745
+target_4206.973684210527_lenght_mean: 1000.0
+target_4206.973684210527_lenght_std: 0.0
+target_4615.789473684211_return_mean: 4233.018703798079
+target_4615.789473684211_return_std: 645.0444183402068
+target_4615.789473684211_lenght_mean: 1000.0
+target_4615.789473684211_lenght_std: 0.0
+target_5024.605263157895_return_mean: 4109.091909953255
+target_5024.605263157895_return_std: 840.201201472028
+target_5024.605263157895_lenght_mean: 1000.0
+target_5024.605263157895_lenght_std: 0.0
+target_5433.421052631579_return_mean: 4044.8610779586957
+target_5433.421052631579_return_std: 885.8173003896809
+target_5433.421052631579_lenght_mean: 1000.0
+target_5433.421052631579_lenght_std: 0.0
+target_5842.236842105263_return_mean: 4352.871034261845
+target_5842.236842105263_return_std: 441.84038885640933
+target_5842.236842105263_lenght_mean: 1000.0
+target_5842.236842105263_lenght_std: 0.0
+target_6251.0526315789475_return_mean: 4035.3374866997697
+target_6251.0526315789475_return_std: 856.4146836986157
+target_6251.0526315789475_lenght_mean: 1000.0
+target_6251.0526315789475_lenght_std: 0.0
+target_6659.868421052632_return_mean: 4250.660992813895
+target_6659.868421052632_return_std: 453.6716503365281
+target_6659.868421052632_lenght_mean: 1000.0
+target_6659.868421052632_lenght_std: 0.0
+target_7068.684210526316_return_mean: 4055.6718694764886
+target_7068.684210526316_return_std: 736.5744831415128
+target_7068.684210526316_lenght_mean: 1000.0
+target_7068.684210526316_lenght_std: 0.0
+target_7477.5_return_mean: 4163.214200831525
+target_7477.5_return_std: 499.3853316578704
+target_7477.5_lenght_mean: 1000.0
+target_7477.5_lenght_std: 0.0
+time/evaluation: 5682.874651432037
+target_training/action_erro_mean: 0.08774930983781815
+target_training/action_erro_std: 0.0
+================================================================================
+Iteration 11
+time/training: 1475.5582113265991
+training/train_loss_mean: 0.077615157270059
+training/train_loss_std: 0.008123411446557595
+training/action_error: 0.08047232031822205
+================================================================================
+Iteration 11
+target_-290.0_return_mean: -276.36048786640464
+target_-290.0_return_std: 43.91954372470738
+target_-290.0_lenght_mean: 1000.0
+target_-290.0_lenght_std: 0.0
+target_118.81578947368422_return_mean: 531.1020054704743
+target_118.81578947368422_return_std: 569.6085058027165
+target_118.81578947368422_lenght_mean: 1000.0
+target_118.81578947368422_lenght_std: 0.0
+target_527.6315789473684_return_mean: 1372.3033216511933
+target_527.6315789473684_return_std: 1001.1361200700462
+target_527.6315789473684_lenght_mean: 1000.0
+target_527.6315789473684_lenght_std: 0.0
+target_936.4473684210527_return_mean: 1898.4055857031954
+target_936.4473684210527_return_std: 888.7482662548847
+target_936.4473684210527_lenght_mean: 1000.0
+target_936.4473684210527_lenght_std: 0.0
+target_1345.2631578947369_return_mean: 2465.0823395235475
+target_1345.2631578947369_return_std: 605.6892130815469
+target_1345.2631578947369_lenght_mean: 1000.0
+target_1345.2631578947369_lenght_std: 0.0
+target_1754.078947368421_return_mean: 2681.0431527262344
+target_1754.078947368421_return_std: 351.33926922997864
+target_1754.078947368421_lenght_mean: 1000.0
+target_1754.078947368421_lenght_std: 0.0
+target_2162.8947368421054_return_mean: 2812.884950094862
+target_2162.8947368421054_return_std: 258.72356735552313
+target_2162.8947368421054_lenght_mean: 1000.0
+target_2162.8947368421054_lenght_std: 0.0
+target_2571.7105263157896_return_mean: 3036.7608961574324
+target_2571.7105263157896_return_std: 240.13883162762804
+target_2571.7105263157896_lenght_mean: 1000.0
+target_2571.7105263157896_lenght_std: 0.0
+target_2980.5263157894738_return_mean: 3352.4610580137073
+target_2980.5263157894738_return_std: 277.8412987990143
+target_2980.5263157894738_lenght_mean: 1000.0
+target_2980.5263157894738_lenght_std: 0.0
+target_3389.342105263158_return_mean: 3681.047970224706
+target_3389.342105263158_return_std: 533.2746009472551
+target_3389.342105263158_lenght_mean: 1000.0
+target_3389.342105263158_lenght_std: 0.0
+target_3798.157894736842_return_mean: 4050.0462358021236
+target_3798.157894736842_return_std: 536.5745917077525
+target_3798.157894736842_lenght_mean: 1000.0
+target_3798.157894736842_lenght_std: 0.0
+target_4206.973684210527_return_mean: 4259.504246750558
+target_4206.973684210527_return_std: 537.9159244925901
+target_4206.973684210527_lenght_mean: 1000.0
+target_4206.973684210527_lenght_std: 0.0
+target_4615.789473684211_return_mean: 4393.83542111074
+target_4615.789473684211_return_std: 243.31384499698524
+target_4615.789473684211_lenght_mean: 1000.0
+target_4615.789473684211_lenght_std: 0.0
+target_5024.605263157895_return_mean: 4318.060834296558
+target_5024.605263157895_return_std: 401.58895009576975
+target_5024.605263157895_lenght_mean: 1000.0
+target_5024.605263157895_lenght_std: 0.0
+target_5433.421052631579_return_mean: 4354.578152956646
+target_5433.421052631579_return_std: 394.1894663866188
+target_5433.421052631579_lenght_mean: 1000.0
+target_5433.421052631579_lenght_std: 0.0
+target_5842.236842105263_return_mean: 4234.8164295802935
+target_5842.236842105263_return_std: 647.4358198306277
+target_5842.236842105263_lenght_mean: 1000.0
+target_5842.236842105263_lenght_std: 0.0
+target_6251.0526315789475_return_mean: 4235.900059994126
+target_6251.0526315789475_return_std: 706.8501946121023
+target_6251.0526315789475_lenght_mean: 1000.0
+target_6251.0526315789475_lenght_std: 0.0
+target_6659.868421052632_return_mean: 4216.140970998819
+target_6659.868421052632_return_std: 657.5312260020143
+target_6659.868421052632_lenght_mean: 1000.0
+target_6659.868421052632_lenght_std: 0.0
+target_7068.684210526316_return_mean: 4277.523135211179
+target_7068.684210526316_return_std: 612.9571854994474
+target_7068.684210526316_lenght_mean: 1000.0
+target_7068.684210526316_lenght_std: 0.0
+target_7477.5_return_mean: 4202.390820870836
+target_7477.5_return_std: 618.0303031742742
+target_7477.5_lenght_mean: 1000.0
+target_7477.5_lenght_std: 0.0
+time/evaluation: 7182.085512638092
+target_training/action_erro_mean: 0.08047232031822205
+target_training/action_erro_std: 0.0
+================================================================================
+Iteration 12
+time/training: 1801.8491833209991
+training/train_loss_mean: 0.07586248336769641
+training/train_loss_std: 0.00771197498780752
+training/action_error: 0.06919853389263153
+================================================================================
+Iteration 12
+target_-290.0_return_mean: -305.61866051435135
+target_-290.0_return_std: 48.144669843629586
+target_-290.0_lenght_mean: 1000.0
+target_-290.0_lenght_std: 0.0
+target_118.81578947368422_return_mean: 183.40194128594297
+target_118.81578947368422_return_std: 422.5381549477039
+target_118.81578947368422_lenght_mean: 1000.0
+target_118.81578947368422_lenght_std: 0.0
+target_527.6315789473684_return_mean: 838.7206013903144
+target_527.6315789473684_return_std: 774.5211648259739
+target_527.6315789473684_lenght_mean: 1000.0
+target_527.6315789473684_lenght_std: 0.0
+target_936.4473684210527_return_mean: 1503.2475620235061
+target_936.4473684210527_return_std: 829.7232690647108
+target_936.4473684210527_lenght_mean: 1000.0
+target_936.4473684210527_lenght_std: 0.0
+target_1345.2631578947369_return_mean: 1981.3876858131239
+target_1345.2631578947369_return_std: 797.4445263008569
+target_1345.2631578947369_lenght_mean: 1000.0
+target_1345.2631578947369_lenght_std: 0.0
+target_1754.078947368421_return_mean: 2485.352680032062
+target_1754.078947368421_return_std: 660.3690463054338
+target_1754.078947368421_lenght_mean: 1000.0
+target_1754.078947368421_lenght_std: 0.0
+target_2162.8947368421054_return_mean: 2832.0377094090795
+target_2162.8947368421054_return_std: 424.4697681749101
+target_2162.8947368421054_lenght_mean: 1000.0
+target_2162.8947368421054_lenght_std: 0.0
+target_2571.7105263157896_return_mean: 3166.8885593988384
+target_2571.7105263157896_return_std: 274.30476943507
+target_2571.7105263157896_lenght_mean: 1000.0
+target_2571.7105263157896_lenght_std: 0.0
+target_2980.5263157894738_return_mean: 3464.6286261854757
+target_2980.5263157894738_return_std: 299.2066981172939
+target_2980.5263157894738_lenght_mean: 1000.0
+target_2980.5263157894738_lenght_std: 0.0
+target_3389.342105263158_return_mean: 3809.327095151738
+target_3389.342105263158_return_std: 545.6051168468599
+target_3389.342105263158_lenght_mean: 1000.0
+target_3389.342105263158_lenght_std: 0.0
+target_3798.157894736842_return_mean: 4006.905828986419
+target_3798.157894736842_return_std: 803.2587305489332
+target_3798.157894736842_lenght_mean: 1000.0
+target_3798.157894736842_lenght_std: 0.0
+target_4206.973684210527_return_mean: 4240.4387836478445
+target_4206.973684210527_return_std: 508.6849140712924
+target_4206.973684210527_lenght_mean: 1000.0
+target_4206.973684210527_lenght_std: 0.0
+target_4615.789473684211_return_mean: 4246.662206565949
+target_4615.789473684211_return_std: 737.7990096767608
+target_4615.789473684211_lenght_mean: 1000.0
+target_4615.789473684211_lenght_std: 0.0
+target_5024.605263157895_return_mean: 4254.041774210028
+target_5024.605263157895_return_std: 626.1475175006993
+target_5024.605263157895_lenght_mean: 1000.0
+target_5024.605263157895_lenght_std: 0.0
+target_5433.421052631579_return_mean: 4216.901385214897
+target_5433.421052631579_return_std: 724.8176986192567
+target_5433.421052631579_lenght_mean: 1000.0
+target_5433.421052631579_lenght_std: 0.0
+target_5842.236842105263_return_mean: 4252.279810729317
+target_5842.236842105263_return_std: 650.9926314052633
+target_5842.236842105263_lenght_mean: 1000.0
+target_5842.236842105263_lenght_std: 0.0
+target_6251.0526315789475_return_mean: 4260.957234862029
+target_6251.0526315789475_return_std: 603.0905357539831
+target_6251.0526315789475_lenght_mean: 1000.0
+target_6251.0526315789475_lenght_std: 0.0
+target_6659.868421052632_return_mean: 4118.751640731017
+target_6659.868421052632_return_std: 849.8608971855076
+target_6659.868421052632_lenght_mean: 1000.0
+target_6659.868421052632_lenght_std: 0.0
+target_7068.684210526316_return_mean: 4199.536551151973
+target_7068.684210526316_return_std: 779.5510572326103
+target_7068.684210526316_lenght_mean: 1000.0
+target_7068.684210526316_lenght_std: 0.0
+target_7477.5_return_mean: 4235.809424592021
+target_7477.5_return_std: 635.7219631939623
+target_7477.5_lenght_mean: 1000.0
+target_7477.5_lenght_std: 0.0
+time/evaluation: 7195.81476521492
+target_training/action_erro_mean: 0.06919853389263153
+target_training/action_erro_std: 0.0
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 13686852: <DT-cheetah> in cluster <dcc> Done
+
+Job <DT-cheetah> was submitted from host <n-62-30-2> by user <s204131> in cluster <dcc> at Wed Jun  8 13:11:48 2022
+Job was executed on host(s) <4*n-62-11-16>, in queue <gpuv100>, as user <s204131> in cluster <dcc> at Wed Jun  8 13:11:49 2022
+</zhome/94/3/155767> was used as the home directory.
+</zhome/94/3/155767/decision_transformer/gym> was used as the working directory.
+Started at Wed Jun  8 13:11:49 2022
+Terminated at Thu Jun  9 03:56:04 2022
+Results reported at Thu Jun  9 03:56:04 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+#BSUB -J DT-cheetah
+#BSUB -o DT-cheetah_%J.out
+#BSUB -e DT-cheetah_%J.err
+#BSUB -q gpuv100
+#BSUB -gpu "num=1:mode=exclusive_process"
+#BSUB -n 4
+#BSUB -R "rusage[mem=4G]"
+#BSUB -R "span[hosts=1]"
+#BSUB -W 15:00
+# end of BSUB options
+
+
+# load CUDA (for GPU support)
+
+# activate the virtual environment
+source $HOME/miniconda3/envs/decision-transformer-gym/bin/activate
+
+wandb on
+echo 'cad8b043f3731a2c453efd8f61915e186ac93ac3' | wandb login
+
+python experiment_single_reward.py --env 'halfcheetah' --dataset 'medium_replay' --seed 45 --save_iters '8,10,12' --eval_iters '8,9,10,11,12' --max_iters 12 --device 'cuda' --log_to_wandb True
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   53154.41 sec.
+    Max Memory :                                 2435 MB
+    Average Memory :                             2428.33 MB
+    Total Requested Memory :                     16384.00 MB
+    Delta Memory :                               13949.00 MB
+    Max Swap :                                   -
+    Max Processes :                              6
+    Max Threads :                                21
+    Run time :                                   53054 sec.
+    Turnaround time :                            53056 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <DT-cheetah_13686852.err> for stderr output of this job.
+

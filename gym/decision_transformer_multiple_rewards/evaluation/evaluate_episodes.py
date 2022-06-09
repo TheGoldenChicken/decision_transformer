@@ -34,7 +34,7 @@ def evaluate_episode_rtg(
     rewards = torch.zeros((0, reward_dim), device=device, dtype=torch.float32)
 
     ep_return = target_return
-    target_return = torch.tensor(ep_return, device=device, dtype=torch.float32).reshape(1, 3)
+    target_return = torch.tensor(ep_return, device=device, dtype=torch.float32).reshape(1, reward_dim)
     timesteps = torch.tensor(0, device=device, dtype=torch.long).reshape(1, 1)
 
     sim_states = []
@@ -56,8 +56,14 @@ def evaluate_episode_rtg(
         actions[-1] = action
         action = action.detach().cpu().numpy()
 
+        x_position_before = env.env.data.qpos[0]
         state, reward, done, _ = env.step(action)
-        reward = torch.tensor([reward for _ in range(reward_dim)])
+        x_position_after = env.env.data.qpos[0]
+        forward_reward = env.env._forward_reward_weight / env.env.dt * (x_position_after - x_position_before)
+        ctrl_cost = env.env._ctrl_cost_weight * np.sum(np.square(action))
+
+        # our_reward = forward_reward - ctrl_cost
+        reward = torch.tensor([forward_reward, ctrl_cost])
 
         cur_state = torch.from_numpy(state).to(device=device).reshape(1, state_dim)
         states = torch.cat([states, cur_state], dim=0)

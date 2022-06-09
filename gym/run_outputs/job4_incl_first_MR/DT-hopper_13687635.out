@@ -1,0 +1,67 @@
+W&B enabled, running your script from this directory will now sync to the cloud.
+Disabling Weights & Biases. Run 'wandb login' again to re-enable.
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 13687635: <DT-hopper> in cluster <dcc> Exited
+
+Job <DT-hopper> was submitted from host <n-62-30-7> by user <s204131> in cluster <dcc> at Wed Jun  8 17:21:54 2022
+Job was executed on host(s) <4*n-62-20-4>, in queue <gpuv100>, as user <s204131> in cluster <dcc> at Thu Jun  9 00:31:19 2022
+</zhome/94/3/155767> was used as the home directory.
+</zhome/94/3/155767/decision_transformer/gym> was used as the working directory.
+Started at Thu Jun  9 00:31:19 2022
+Terminated at Thu Jun  9 00:31:29 2022
+Results reported at Thu Jun  9 00:31:29 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+#BSUB -J DT-hopper
+#BSUB -o DT-hopper_%J.out
+#BSUB -e DT-hopper_%J.err
+#BSUB -q gpuv100
+#BSUB -gpu "num=1:mode=exclusive_process"
+#BSUB -n 4
+#BSUB -R "rusage[mem=4G]"
+#BSUB -R "span[hosts=1]"
+#BSUB -W 20:00
+# end of BSUB options
+
+
+# load CUDA (for GPU support)
+
+# activate the virtual environment
+source $HOME/miniconda3/envs/decision-transformer-gym/bin/activate
+
+wandb on
+echo 'cad8b043f3731a2c453efd8f61915e186ac93ac3' | wandb login
+
+python experiment.py --env 'hopper' --dataset 'medium_replay' --save_iters '5,10,11,12' --eval_iters '8,9,10,11,12' --max_iters 12 --device 'cuda' --log_to_wandb True --split_reward True --seed 42
+
+------------------------------------------------------------
+
+Exited with exit code 2.
+
+Resource usage summary:
+
+    CPU time :                                   3.55 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     16384.00 MB
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   12 sec.
+    Turnaround time :                            25775 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <DT-hopper_13687635.err> for stderr output of this job.
+
