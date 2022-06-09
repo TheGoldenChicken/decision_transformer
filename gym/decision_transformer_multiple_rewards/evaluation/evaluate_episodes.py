@@ -62,8 +62,7 @@ def evaluate_episode_rtg(
         forward_reward = env.env._forward_reward_weight / env.env.dt * (x_position_after - x_position_before)
         ctrl_cost = env.env._ctrl_cost_weight * np.sum(np.square(action))
 
-        # our_reward = forward_reward - ctrl_cost
-        reward = torch.tensor([forward_reward, ctrl_cost])
+        reward = torch.tensor([forward_reward, ctrl_cost]).to(device=device)
 
         cur_state = torch.from_numpy(state).to(device=device).reshape(1, state_dim)
         states = torch.cat([states, cur_state], dim=0)
