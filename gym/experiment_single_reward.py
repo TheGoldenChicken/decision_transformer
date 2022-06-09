@@ -37,39 +37,13 @@ def experiment(
 
 
     # Device and Wands and biases settings
-    device = variant.get('device', 'cuda')
+    device = variant.get('device', 'cpu')
     log_to_wandb = variant.get('log_to_wandb', False)
 
     # Getting datasets and creating names
     env_name, dataset = variant['env'], variant['dataset']
     group_name = f'{exp_prefix}-{env_name}-{dataset}'
     exp_prefix = f"{group_name}-{variant['seed']}"
-
-################## DEFINE ENV ##################
-
-    if env_name == 'hopper':
-        env = gym.make('Hopper-v3')
-        max_ep_len = 1000
-        env_targets = np.linspace(18, 3192 * 1.5, 20)
-        # env_targets = [3600, 1800]  # evaluation conditioning targets
-        scale = 1000.  # normalization for rewards/returns
-    elif env_name == 'halfcheetah':
-        env = gym.make('HalfCheetah-v3')
-        max_ep_len = 1000
-        env_targets = np.linspace(-290, 4985*1.5, 20)
-        # env_targets = [12000, 6000]
-        scale = 1000.
-    elif env_name == 'walker2d':
-        env = gym.make('Walker2d-v3')
-        max_ep_len = 1000
-        env_targets = np.linspace(2, 4132*1.5, 20)
-        # env_targets = [5000, 2500]
-        scale = 1000.
-    else:
-        raise NotImplementedError
-
-    state_dim = env.observation_space.shape[0]
-    act_dim = env.action_space.shape[0]
 
     # load dataset
     dataset_path = f'data/{env_name}-{dataset}-v2.pkl'
@@ -79,6 +53,35 @@ def experiment(
         # observations, next_observations, actions, rewards, terminals (is_done)
         # next_observations is just observations at t+1 (why is this necessary?)
         # Ok, turns out not, there is some difference, don't know what though
+
+################## DEFINE ENV ##################
+
+    if env_name == 'hopper':
+        env = gym.make('Hopper-v3')
+        max_ep_len = 1000
+        # env_targets = np.linspace(18, 3192 * 1.5, 20)
+        # env_targets = [3600, 1800]  # evaluation conditioning targets
+        scale = 1000.  # normalization for rewards/returns
+    elif env_name == 'halfcheetah':
+        env = gym.make('HalfCheetah-v3')
+        max_ep_len = 1000
+        # env_targets = np.linspace(-290, 4985*1.5, 20)
+        # env_targets = [12000, 6000]
+        scale = 1000.
+    elif env_name == 'walker2d':
+        env = gym.make('Walker2d-v3')
+        max_ep_len = 1000
+        # env_targets = np.linspace(2, 4132*1.5, 20)
+        # env_targets = [5000, 2500]
+        scale = 1000.
+    else:
+        raise NotImplementedError
+    
+    max_reward = max([sum(traj['rewards']) for traj in trajectories])
+    env_targets = np.linspace(0, 1.5 * max_reward, 20, endpoint=True)
+
+    state_dim = env.observation_space.shape[0]
+    act_dim = env.action_space.shape[0]
 
     # save all path information into separate lists
     states, traj_lens, returns = [], [], []
@@ -306,7 +309,7 @@ if __name__ == '__main__':
     parser.add_argument('--dataset', type=str, default='medium')  # medium, medium-replay, medium-expert, expert
     parser.add_argument('--num_eval_episodes', type=int, default=100)
     parser.add_argument('--max_iters', type=int, default=10)
-    parser.add_argument('--device', type=str, default='cuda')
+    parser.add_argument('--device', type=str, default='cpu')
     parser.add_argument('--log_to_wandb', '-w', type=bool, default=False)
 
 

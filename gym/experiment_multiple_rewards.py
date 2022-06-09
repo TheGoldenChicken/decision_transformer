@@ -97,11 +97,11 @@ def experiment(
         raise NotImplementedError
 
     # vi laver grid 10x10 for target rewards
-    max_forward_reward, max_ctrl_cost = np.array([traj['multi_rewards'] for traj in trajectories]).max(axis=(0,2))
+    max_forward_reward, max_ctrl_cost = np.array([traj['multi_rewards'].sum(axis=1) for traj in trajectories]).max(axis=0)
 
     forward_rewards = np.linspace(0, 1.5 * max_forward_reward, 10, endpoint=True)
     ctrl_costs = np.linspace(0, 1.5 * max_ctrl_cost, 10, endpoint=True)
-    env_targets = [(forward_reward, ctrl_cost) for forward_reward in forward_rewards for ctrl_cost in ctrl_costs]
+    env_targets = np.array([[forward_reward, ctrl_cost] for forward_reward in forward_rewards for ctrl_cost in ctrl_costs])
 
     state_dim = env.observation_space.shape[0]
     act_dim = env.action_space.shape[0]
