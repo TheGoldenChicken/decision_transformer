@@ -1,13 +1,0 @@
-  0%|          | 0/202 [00:00<?, ?it/s]100%|██████████| 202/202 [00:00<00:00, 254047.80it/s]
-Traceback (most recent call last):
-  File "experiment_multiple_rewards.py", line 356, in <module>
-    experiment('gym-experiment_multi', variant=vars(args))
-  File "experiment_multiple_rewards.py", line 299, in experiment
-    eval_outputs = trainer.evaluate(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
-  File "/zhome/94/3/155767/decision_transformer/gym/decision_transformer_multiple_rewards/training/trainer.py", line 56, in evaluate
-    outputs = eval_fn(self.model)
-  File "experiment_multiple_rewards.py", line 196, in fn
-    ret, length = evaluate_episode_rtg(
-  File "/zhome/94/3/155767/decision_transformer/gym/decision_transformer_multiple_rewards/evaluation/evaluate_episodes.py", line 69, in evaluate_episode_rtg
-    rewards[-1] = reward
-KeyboardInterrupt
