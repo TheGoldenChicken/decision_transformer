@@ -1,13 +1,0 @@
-  0%|          | 0/202 [00:00<?, ?it/s]100%|██████████| 202/202 [00:00<00:00, 293470.53it/s]
-wandb: Dry run mode, not syncing to the cloud.
-wandb: Tracking run with wandb version 0.9.1
-wandb: W&B is disabled in this directory.  Run `wandb on` to enable cloud syncing.
-wandb: Wandb version 0.12.17 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Run data is saved locally in wandb/dryrun-20220606_082108-jg5sg7bc
-
-
-wandb: Waiting for W&B process to finish, PID 779
-wandb: Program ended successfully.
-wandb: You can sync this run to the cloud by running: 
-wandb: wandb sync wandb/dryrun-20220606_082108-jg5sg7bc
