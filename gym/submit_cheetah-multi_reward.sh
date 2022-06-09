@@ -7,7 +7,7 @@
 #BSUB -n 4
 #BSUB -R "rusage[mem=4G]"
 #BSUB -R "span[hosts=1]"
-#BSUB -W 20:00
+#BSUB -W 24:00
 # end of BSUB options
 
 
@@ -19,4 +19,4 @@ source $HOME/miniconda3/envs/decision-transformer-gym/bin/activate
 wandb on
 echo 'cad8b043f3731a2c453efd8f61915e186ac93ac3' | wandb login
 
-python experiment.py --env 'halfcheetah' --dataset 'medium_replay' --save_iters '5,10,11,12' --eval_iters '8,9,10,11,12' --max_iters 12 --device 'cuda' --log_to_wandb True --split_reward True --seed 42 --num_eval_episodes 10
+python experiment_multiple_rewards.py --env 'halfcheetah' --dataset 'medium_replay' --save_iters '5,10,11,12' --eval_iters '8,9,10,11,12' --max_iters 12 --device 'cuda' --split_reward True --seed 42 --num_eval_episodes 10 --num_steps_per_iter 10000
