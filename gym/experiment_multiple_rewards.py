@@ -297,7 +297,7 @@ def experiment(
 
         if iter in eval_iters:
             eval_outputs = trainer.evaluate(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
-            file = open(f'{directory_path}/evaluation_data/{env_name}/{dataset}/iter{iter}-{exp_prefix}.pkl', 'wb')
+            file = open(f'{directory_path}/evaluation_data/{env_name}/{dataset}/iter{iter}-{exp_prefix}', 'wb')
             pickle.dump(eval_outputs, file)
             file.close()
 
