@@ -13,6 +13,8 @@
 
 # load CUDA (for GPU support)
 
+module load cuda/11.6
+
 # activate the virtual environment
 source $HOME/miniconda3/envs/decision-transformer-gym/bin/activate
 

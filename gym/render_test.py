@@ -19,8 +19,8 @@ with open(dataset_path, 'rb') as f:
 
 #Load the model and environment from its xml file
 #model = load_model_from_path("../xmls/tosser.xml")
-model = load_model_from_path('/home/dayman/miniconda3/envs/decision-transformer-gym/lib/python3.8/site-packages/gym/envs/mujoco/assets/half_cheetah.xml')
-sim = MjSim(model)
+#model = load_model_from_path('/home/dayman/miniconda3/envs/decision-transformer-gym/lib/python3.8/site-packages/gym/envs/mujoco/assets/half_cheetah.xml')
+#sim = MjSim(model)
 env = gym.make('HalfCheetah-v2')
 # The following doesn't work, gym.make returns some kind of weird timelimit object, a wrapper for gym time_limits
 # model2 = gym.make('Ant') # Remember capitalization
@@ -30,10 +30,10 @@ env = gym.make('HalfCheetah-v2')
 sim_horizon = 1000
 
 #initialize the simulation visualization
-viewer = MjViewer(sim)
+#viewer = MjViewer(sim)
 
 #get initial state of simulation
-sim_state = sim.get_state()
+#sim_state = sim.get_state()
 
 step = 0
 #ob = env.reset()
@@ -43,7 +43,7 @@ for traj in trajectories:
     #ob = env.manual_reset(traj['infos/qpos'][0], traj['infos/qvel'][0])
     ob = env.reset()
     print('resetting')
-    env.env.env.set_state(traj['infos/qpos'][0], traj['infos/qvel'][0])
+    env.unwrapped.set_state(traj['infos/qpos'][0], traj['infos/qvel'][0])
     print(len(traj['infos/qpos']))
     for r, actionss in enumerate(traj['actions']):
         action = actionss
