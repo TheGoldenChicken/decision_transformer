@@ -84,4 +84,9 @@ def evaluate_episode_rtg(
         if done:
             break
 
+    try:
+        episode_return.to('cpu')
+    except:
+        print('Episode return not a GPU tensor')
+
     return episode_return, episode_length
