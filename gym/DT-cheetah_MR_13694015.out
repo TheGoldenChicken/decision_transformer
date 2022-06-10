@@ -1,0 +1,80 @@
+W&B enabled, running your script from this directory will now sync to the cloud.
+Disabling Weights & Biases. Run 'wandb login' again to re-enable.
+Creating states list
+==================================================
+Starting new experiment: halfcheetah medium_replay
+202 trajectories, 201798 timesteps found
+Average return: 3090.42, std: 1678.82
+Max return: 4981.30, min: -636.89
+==================================================
+================================================================================
+Iteration 1
+time/training: 0.6076467037200928
+training/train_loss_mean: 0.8011776447296143
+training/train_loss_std: 0.011656136225471724
+training/action_error: 0.8101899027824402
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 13694015: <DT-cheetah_MR> in cluster <dcc> Done
+
+Job <DT-cheetah_MR> was submitted from host <n-62-30-7> by user <s204131> in cluster <dcc> at Fri Jun 10 09:28:04 2022
+Job was executed on host(s) <4*n-62-20-6>, in queue <gpuv100>, as user <s204131> in cluster <dcc> at Fri Jun 10 09:28:05 2022
+</zhome/94/3/155767> was used as the home directory.
+</zhome/94/3/155767/decision_transformer/gym> was used as the working directory.
+Started at Fri Jun 10 09:28:05 2022
+Terminated at Fri Jun 10 09:37:48 2022
+Results reported at Fri Jun 10 09:37:48 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+#BSUB -J DT-cheetah_MR
+#BSUB -o DT-cheetah_MR_%J.out
+#BSUB -e DT-cheetah_MR_%J.err
+#BSUB -q gpuv100
+#BSUB -gpu "num=1:mode=exclusive_process"
+#BSUB -n 4
+#BSUB -R "rusage[mem=4G]"
+#BSUB -R "span[hosts=1]"
+#BSUB -W 4:00
+# end of BSUB options
+
+
+# load CUDA (for GPU support)
+
+# activate the virtual environment
+source $HOME/miniconda3/envs/decision-transformer-gym/bin/activate
+
+wandb on
+echo 'cad8b043f3731a2c453efd8f61915e186ac93ac3' | wandb login
+
+python experiment_multiple_rewards.py --env 'halfcheetah' --dataset 'medium_replay' --eval_iters '1' --max_iters 1 --device 'cuda' --split_reward True --seed 42069 --num_eval_episodes 2 --num_steps_per_iter 10
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   546.50 sec.
+    Max Memory :                                 2437 MB
+    Average Memory :                             2031.50 MB
+    Total Requested Memory :                     16384.00 MB
+    Delta Memory :                               13947.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                9
+    Run time :                                   692 sec.
+    Turnaround time :                            584 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <DT-cheetah_MR_13694015.err> for stderr output of this job.
+

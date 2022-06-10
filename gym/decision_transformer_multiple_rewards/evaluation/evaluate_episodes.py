@@ -39,7 +39,7 @@ def evaluate_episode_rtg(
 
     sim_states = []
 
-    episode_return, episode_length = 0, 0
+    episode_return, episode_length = [], 0
     for t in range(max_ep_len):
 
         # add padding
@@ -78,7 +78,7 @@ def evaluate_episode_rtg(
             [timesteps,
              torch.ones((1, 1), device=device, dtype=torch.long) * (t+1)], dim=1)
 
-        episode_return += reward
+        episode_return += [[forward_reward, ctrl_cost]]
         episode_length += 1
 
         if done:

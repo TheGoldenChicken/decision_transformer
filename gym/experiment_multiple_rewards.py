@@ -297,7 +297,7 @@ def experiment(
 
         if iter in eval_iters:
             eval_outputs = trainer.evaluate(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
-            file = open(f'{directory_path}/evaluation_data/{env_name}/{dataset}/iter{iter}-{exp_prefix}.pkl', 'wb')
+            file = open(f'{directory_path}/evaluation_data/{env_name}/{dataset}/iter{iter}-{exp_prefix}', 'wb')
             pickle.dump(eval_outputs, file)
             file.close()
 
@@ -325,18 +325,18 @@ if __name__ == '__main__':
     
     parser.add_argument('--eval_iters', type=str, default='1') # string like '5,10,15'
 
-    parser.add_argument('--env', type=str, default='halfcheetah')
-    parser.add_argument('--dataset', type=str, default='medium')  # medium, medium-replay, medium-expert, expert
-    parser.add_argument('--num_eval_episodes', type=int, default=2) # 100
+    parser.add_argument('--env', type=str, default='hopper')
+    parser.add_argument('--dataset', type=str, default='medium-replay')  # medium, medium-replay, medium-expert, expert
+    parser.add_argument('--num_eval_episodes', type=int, default=100) # 100
     parser.add_argument('--max_iters', type=int, default=10)
-    parser.add_argument('--device', type=str, default='cuda')
+    parser.add_argument('--device', type=str, default='cpu')
     parser.add_argument('--log_to_wandb', '-w', type=bool, default=False)
 
 
     parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--embed_dim', type=int, default=128)
 
-    parser.add_argument('--num_steps_per_iter', type=int, default=10) #10000
+    parser.add_argument('--num_steps_per_iter', type=int, default=10_000) #10000
     
     parser.add_argument('--K', type=int, default=20) # contect window
     parser.add_argument('--n_layer', type=int, default=3)
