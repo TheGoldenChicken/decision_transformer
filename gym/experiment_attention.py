@@ -190,7 +190,7 @@ def experiment(
 
     def eval_episodes(target_rew):
         def fn(model):
-            returns, lengths = [], []
+            returns, lengths, attentions, cross_attentions = [], [], [], []
             for _ in range(variant['num_eval_episodes']):
                 with torch.no_grad():
                     ret, length, att, cross_att = evaluate_episode_rtg(
@@ -206,12 +206,17 @@ def experiment(
                         state_mean=state_mean,
                         state_std=state_std,
                         device=device,
+                        return_atttenions_interval=0
                     )
                 returns.append(ret)
                 lengths.append(length)
+                attentions.append(att)
+                cross_attentions.append(cross_att)
             return {
                 f'{target_rew}_returns': returns,
                 f'{target_rew}_lenghts': lengths,
+                f'{target_rew}_attentions': attentions,
+                f'{target_rew}_cross_attentions': cross_attentions
 
                 # f'target_{target_rew}_return_mean': np.mean(returns),
                 # f'target_{target_rew}_return_std': np.std(returns),

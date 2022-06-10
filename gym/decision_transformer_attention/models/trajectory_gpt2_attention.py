@@ -601,7 +601,7 @@ class GPT2Model(GPT2PreTrainedModel):
             encoder_hidden_states=None,
             encoder_attention_mask=None,
             use_cache=None,
-            output_attentions=False,
+            output_attentions=True,
             output_hidden_states=None,
             return_dict=None,
     ):
