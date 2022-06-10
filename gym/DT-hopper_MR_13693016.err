@@ -1,1 +1,9 @@
   0%|          | 0/2041 [00:00<?, ?it/s]100%|██████████| 2041/2041 [00:00<00:00, 376586.95it/s]
+Traceback (most recent call last):
+  File "experiment_multiple_rewards.py", line 356, in <module>
+    experiment('gym-experiment_multi', variant=vars(args))
+  File "experiment_multiple_rewards.py", line 299, in experiment
+    eval_outputs = trainer.evaluate(num_steps=variant['num_steps_per_iter'], iter_num=iter, print_logs=True)
+  File "/zhome/94/3/155767/decision_transformer/gym/decision_transformer_multiple_rewards/training/trainer.py", line 73, in evaluate
+    v = torch.stack(v, dim=1)
+TypeError: expected Tensor as element 0 in argument 0, but got list
