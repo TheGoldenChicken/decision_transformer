@@ -1,0 +1,146 @@
+W&B enabled, running your script from this directory will now sync to the cloud.
+Disabling Weights & Biases. Run 'wandb login' again to re-enable.
+Creating states list
+==================================================
+Starting new experiment: hopper medium_replay
+2041 trajectories, 399959 timesteps found
+Average return: 464.59, std: 510.32
+Max return: 3189.35, min: -0.71
+==================================================
+================================================================================
+Iteration 1
+time/training: 245.60652995109558
+training/train_loss_mean: 0.249554651299119
+training/train_loss_std: 0.09945900445403717
+training/action_error: 0.1622154712677002
+================================================================================
+Iteration 2
+time/training: 246.29472851753235
+training/train_loss_mean: 0.16190371444523335
+training/train_loss_std: 0.01246379002257018
+training/action_error: 0.14732787013053894
+================================================================================
+Iteration 3
+time/training: 246.68893194198608
+training/train_loss_mean: 0.14241918766349554
+training/train_loss_std: 0.009128278857604888
+training/action_error: 0.1331152468919754
+================================================================================
+Iteration 4
+time/training: 246.338552236557
+training/train_loss_mean: 0.13210335115641356
+training/train_loss_std: 0.008023342810143013
+training/action_error: 0.1381506323814392
+================================================================================
+Iteration 5
+time/training: 246.61370205879211
+training/train_loss_mean: 0.12555445343479515
+training/train_loss_std: 0.007571311615519778
+training/action_error: 0.12145651876926422
+================================================================================
+Iteration 6
+time/training: 246.36026239395142
+training/train_loss_mean: 0.12091490078270435
+training/train_loss_std: 0.00728965097882461
+training/action_error: 0.11516448110342026
+================================================================================
+Iteration 7
+time/training: 246.22149300575256
+training/train_loss_mean: 0.11713172713890671
+training/train_loss_std: 0.006933053941715288
+training/action_error: 0.11665421724319458
+================================================================================
+Iteration 8
+time/training: 246.12635040283203
+training/train_loss_mean: 0.11423866207674145
+training/train_loss_std: 0.0067191542381911445
+training/action_error: 0.10258510708808899
+================================================================================
+Iteration 9
+time/training: 246.4918670654297
+training/train_loss_mean: 0.11176719770655036
+training/train_loss_std: 0.0066423708922572445
+training/action_error: 0.12073048204183578
+================================================================================
+Iteration 10
+time/training: 246.51502346992493
+training/train_loss_mean: 0.10960845502689481
+training/train_loss_std: 0.006573842732898364
+training/action_error: 0.09573309868574142
+================================================================================
+Iteration 11
+time/training: 247.0157129764557
+training/train_loss_mean: 0.10783163232281805
+training/train_loss_std: 0.006345178494808373
+training/action_error: 0.10470675677061081
+================================================================================
+Iteration 12
+time/training: 246.6271677017212
+training/train_loss_mean: 0.10625713191628457
+training/train_loss_std: 0.006254659273173368
+training/action_error: 0.10377997905015945
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 13694177: <DT-hopper_MR> in cluster <dcc> Done
+
+Job <DT-hopper_MR> was submitted from host <n-62-30-7> by user <s204131> in cluster <dcc> at Fri Jun 10 10:22:26 2022
+Job was executed on host(s) <4*n-62-20-6>, in queue <gpuv100>, as user <s204131> in cluster <dcc> at Fri Jun 10 10:22:27 2022
+</zhome/94/3/155767> was used as the home directory.
+</zhome/94/3/155767/decision_transformer/gym> was used as the working directory.
+Started at Fri Jun 10 10:22:27 2022
+Terminated at Fri Jun 10 13:05:03 2022
+Results reported at Fri Jun 10 13:05:03 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+#BSUB -J DT-hopper_MR
+#BSUB -o DT-hopper_MR_%J.out
+#BSUB -e DT-hopper_MR_%J.err
+#BSUB -q gpuv100
+#BSUB -gpu "num=1:mode=exclusive_process"
+#BSUB -n 4
+#BSUB -R "rusage[mem=4G]"
+#BSUB -R "span[hosts=1]"
+#BSUB -W 24:00
+# end of BSUB options
+
+
+# load CUDA (for GPU support)
+
+# activate the virtual environment
+source $HOME/miniconda3/envs/decision-transformer-gym/bin/activate
+
+wandb on
+echo 'cad8b043f3731a2c453efd8f61915e186ac93ac3' | wandb login
+
+python experiment_multiple_rewards.py --env 'hopper' --dataset 'medium_replay' --save_iters '5,10,11,12' --eval_iters '8,9,10,11,12' --max_iters 12 --device 'cuda' --split_reward True --seed 42 --num_eval_episodes 20 --num_steps_per_iter 10000
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   9724.17 sec.
+    Max Memory :                                 2608 MB
+    Average Memory :                             2501.97 MB
+    Total Requested Memory :                     16384.00 MB
+    Delta Memory :                               13776.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                9
+    Run time :                                   9860 sec.
+    Turnaround time :                            9757 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <DT-hopper_MR_13694177.err> for stderr output of this job.
+

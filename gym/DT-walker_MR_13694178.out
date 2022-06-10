@@ -1,0 +1,146 @@
+W&B enabled, running your script from this directory will now sync to the cloud.
+Disabling Weights & Biases. Run 'wandb login' again to re-enable.
+Creating states list
+==================================================
+Starting new experiment: walker2d medium_replay
+1093 trajectories, 300907 timesteps found
+Average return: 680.20, std: 894.85
+Max return: 4126.45, min: -48.73
+==================================================
+================================================================================
+Iteration 1
+time/training: 268.6411554813385
+training/train_loss_mean: 0.2046737113624811
+training/train_loss_std: 0.11087033827053536
+training/action_error: 0.12615635991096497
+================================================================================
+Iteration 2
+time/training: 267.3266749382019
+training/train_loss_mean: 0.1233573200725019
+training/train_loss_std: 0.012453527266525452
+training/action_error: 0.10616306215524673
+================================================================================
+Iteration 3
+time/training: 270.755074262619
+training/train_loss_mean: 0.10879274945631623
+training/train_loss_std: 0.010060847217254856
+training/action_error: 0.09792990982532501
+================================================================================
+Iteration 4
+time/training: 277.6994869709015
+training/train_loss_mean: 0.10094462605938316
+training/train_loss_std: 0.008972936366424251
+training/action_error: 0.11834405362606049
+================================================================================
+Iteration 5
+time/training: 277.3421127796173
+training/train_loss_mean: 0.09605420050397516
+training/train_loss_std: 0.008538345687654488
+training/action_error: 0.09173896908760071
+================================================================================
+Iteration 6
+time/training: 278.9885549545288
+training/train_loss_mean: 0.09254960907921195
+training/train_loss_std: 0.008010928413610282
+training/action_error: 0.10809964686632156
+================================================================================
+Iteration 7
+time/training: 296.8845763206482
+training/train_loss_mean: 0.08954903297275305
+training/train_loss_std: 0.007637295231654428
+training/action_error: 0.08754707872867584
+================================================================================
+Iteration 8
+time/training: 305.60511565208435
+training/train_loss_mean: 0.08730293156728149
+training/train_loss_std: 0.007264355725828377
+training/action_error: 0.07603082060813904
+================================================================================
+Iteration 9
+time/training: 306.3659439086914
+training/train_loss_mean: 0.0854405995234847
+training/train_loss_std: 0.0070575689603153725
+training/action_error: 0.09802257269620895
+================================================================================
+Iteration 10
+time/training: 303.62933683395386
+training/train_loss_mean: 0.0838784971371293
+training/train_loss_std: 0.006856853529379203
+training/action_error: 0.0792890265583992
+================================================================================
+Iteration 11
+time/training: 293.3782539367676
+training/train_loss_mean: 0.08249986868165433
+training/train_loss_std: 0.00664484730263462
+training/action_error: 0.09124366194009781
+================================================================================
+Iteration 12
+time/training: 287.8364064693451
+training/train_loss_mean: 0.081332045244053
+training/train_loss_std: 0.00655108680285987
+training/action_error: 0.08099006861448288
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 13694178: <DT-walker_MR> in cluster <dcc> Done
+
+Job <DT-walker_MR> was submitted from host <n-62-30-7> by user <s204131> in cluster <dcc> at Fri Jun 10 10:22:31 2022
+Job was executed on host(s) <4*n-62-20-5>, in queue <gpuv100>, as user <s204131> in cluster <dcc> at Fri Jun 10 10:22:33 2022
+</zhome/94/3/155767> was used as the home directory.
+</zhome/94/3/155767/decision_transformer/gym> was used as the working directory.
+Started at Fri Jun 10 10:22:33 2022
+Terminated at Fri Jun 10 12:53:28 2022
+Results reported at Fri Jun 10 12:53:28 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+#BSUB -J DT-walker_MR
+#BSUB -o DT-walker_MR_%J.out
+#BSUB -e DT-walker_MR_%J.err
+#BSUB -q gpuv100
+#BSUB -gpu "num=1:mode=exclusive_process"
+#BSUB -n 4
+#BSUB -R "rusage[mem=4G]"
+#BSUB -R "span[hosts=1]"
+#BSUB -W 24:00
+# end of BSUB options
+
+
+# load CUDA (for GPU support)
+
+# activate the virtual environment
+source $HOME/miniconda3/envs/decision-transformer-gym/bin/activate
+
+wandb on
+echo 'cad8b043f3731a2c453efd8f61915e186ac93ac3' | wandb login
+
+python experiment_multiple_rewards.py --env 'walker2d' --dataset 'medium_replay' --save_iters '5,10,11,12' --eval_iters '8,9,10,11,12' --max_iters 12 --device 'cuda' --split_reward True --seed 42 --num_eval_episodes 20 --num_steps_per_iter 10000
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   9033.53 sec.
+    Max Memory :                                 2603 MB
+    Average Memory :                             2498.86 MB
+    Total Requested Memory :                     16384.00 MB
+    Delta Memory :                               13781.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                9
+    Run time :                                   9153 sec.
+    Turnaround time :                            9057 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <DT-walker_MR_13694178.err> for stderr output of this job.
+
