@@ -61,18 +61,18 @@ class Trainer:
         for k in self.diagnostics:
             logs[k] = self.diagnostics[k]
 
-        if print_logs:
-            print('=' * 80)
-            print(f'Iteration {iter_num}')
-            for k, v in logs.items():
-                print(k[-7:])
-                if k == 'time/evaluation':
-                    print(f'{k}: {v}')
-                elif k[-7:] == 'returns':
-                    target, statistic = k.split('_')
-                    v = torch.stack(v, dim=1)
-                    print(f'target_{target}_{statistic[:-1]}_mean: {torch.mean(v, dim=1)}')
-                    print(f'target_{target}_{statistic[:-1]}_std: {torch.std(v, dim=1)}')
+        # if print_logs:
+        #     print('=' * 80)
+        #     print(f'Iteration {iter_num}')
+        #     for k, v in logs.items():
+        #         print(k[-7:])
+        #         if k == 'time/evaluation':
+        #             print(f'{k}: {v}')
+        #         elif k[-7:] == 'returns':
+        #             target, statistic = k.split('_')
+        #             v = torch.stack(v, dim=1)
+        #             print(f'target_{target}_{statistic[:-1]}_mean: {torch.mean(v, dim=1)}')
+        #             print(f'target_{target}_{statistic[:-1]}_std: {torch.std(v, dim=1)}')
 
         return logs
 
