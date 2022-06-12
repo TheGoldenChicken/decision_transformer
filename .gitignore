@@ -133,3 +133,5 @@ dmypy.json
 
 *.out
 *.err
+
+gym/evaluation_data/
