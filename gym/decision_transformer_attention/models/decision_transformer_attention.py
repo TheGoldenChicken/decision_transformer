@@ -4,8 +4,8 @@ import torch.nn as nn
 
 import transformers
 
-from decision_transformer_multiple_rewards.models.model import TrajectoryModel
-from decision_transformer_multiple_rewards.models.trajectory_gpt2 import GPT2Model
+from decision_transformer_single_reward.models.model import TrajectoryModel
+from decision_transformer_single_reward.models.trajectory_gpt2 import GPT2Model
 
 
 class DecisionTransformer(TrajectoryModel):
@@ -18,7 +18,6 @@ class DecisionTransformer(TrajectoryModel):
             self,
             state_dim,
             act_dim,
-            reward_dim,
             hidden_size,
             max_length=None,
             max_ep_len=4096,
@@ -26,8 +25,6 @@ class DecisionTransformer(TrajectoryModel):
             **kwargs
     ):
         super().__init__(state_dim, act_dim, max_length=max_length)
-
-        self.reward_dim = reward_dim
 
         self.hidden_size = hidden_size
         config = transformers.GPT2Config(
@@ -41,7 +38,7 @@ class DecisionTransformer(TrajectoryModel):
         self.transformer = GPT2Model(config)
 
         self.embed_timestep = nn.Embedding(max_ep_len, hidden_size)
-        self.embed_return = torch.nn.Linear(reward_dim, hidden_size)
+        self.embed_return = torch.nn.Linear(1, hidden_size)
         self.embed_state = torch.nn.Linear(self.state_dim, hidden_size)
         self.embed_action = torch.nn.Linear(self.act_dim, hidden_size)
 
@@ -52,9 +49,10 @@ class DecisionTransformer(TrajectoryModel):
         self.predict_action = nn.Sequential(
             *([nn.Linear(hidden_size, self.act_dim)] + ([nn.Tanh()] if action_tanh else []))
         )
-        self.predict_return = torch.nn.Linear(hidden_size, reward_dim)
+        self.predict_return = torch.nn.Linear(hidden_size, 1)
 
     def forward(self, states, actions, rewards, returns_to_go, timesteps, attention_mask=None):
+
         batch_size, seq_length = states.shape[0], states.shape[1]
 
         if attention_mask is None:
@@ -90,6 +88,8 @@ class DecisionTransformer(TrajectoryModel):
             attention_mask=stacked_attention_mask,
         )
         x = transformer_outputs['last_hidden_state']
+        attention_out = transformer_outputs['attentions']
+        cross_attention_out = transformer_outputs['cross_attentions']
 
         # reshape x so that the second dimension corresponds to the original
         # returns (0), states (1), or actions (2); i.e. x[:,1,t] is the token for s_t
@@ -100,14 +100,14 @@ class DecisionTransformer(TrajectoryModel):
         state_preds = self.predict_state(x[:,2])    # predict next state given state and action
         action_preds = self.predict_action(x[:,1])  # predict next action given state
 
-        return state_preds, action_preds, return_preds
+        return state_preds, action_preds, return_preds, attention_out, cross_attention_out
 
     def get_action(self, states, actions, rewards, returns_to_go, timesteps, **kwargs):
         # we don't care about the past rewards in this model
 
         states = states.reshape(1, -1, self.state_dim)
         actions = actions.reshape(1, -1, self.act_dim)
-        returns_to_go = returns_to_go.reshape(1, -1, self.reward_dim)
+        returns_to_go = returns_to_go.reshape(1, -1, 1)
         timesteps = timesteps.reshape(1, -1)
 
         if self.max_length is not None:
@@ -127,7 +127,7 @@ class DecisionTransformer(TrajectoryModel):
                              device=actions.device), actions],
                 dim=1).to(dtype=torch.float32)
             returns_to_go = torch.cat(
-                [torch.zeros((returns_to_go.shape[0], self.max_length-returns_to_go.shape[1], self.reward_dim), device=returns_to_go.device), returns_to_go],
+                [torch.zeros((returns_to_go.shape[0], self.max_length-returns_to_go.shape[1], 1), device=returns_to_go.device), returns_to_go],
                 dim=1).to(dtype=torch.float32)
             timesteps = torch.cat(
                 [torch.zeros((timesteps.shape[0], self.max_length-timesteps.shape[1]), device=timesteps.device), timesteps],
@@ -139,4 +139,5 @@ class DecisionTransformer(TrajectoryModel):
         _, action_preds, return_preds, attentions, cross_attentions = self.forward(
             states, actions, None, returns_to_go, timesteps, attention_mask=attention_mask, **kwargs)
 
-        return action_preds[0, -1]
+
+        return action_preds[0,-1], attentions, cross_attentions
