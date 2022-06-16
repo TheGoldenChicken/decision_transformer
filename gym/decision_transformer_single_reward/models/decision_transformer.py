@@ -68,7 +68,7 @@ class DecisionTransformer(TrajectoryModel):
         # time embeddings are treated similar to positional embeddings
         state_embeddings = state_embeddings + time_embeddings
         action_embeddings = action_embeddings + time_embeddings
-        returns_embeddings = returns_embeddings + time_embeddings
+        returns_embeddings = (returns_embeddings + time_embeddings) * 0 # for behavior cloning
 
         # this makes the sequence look like (R_1, s_1, a_1, R_2, s_2, a_2, ...)
         # which works nice in an autoregressive sense since states predict actions
