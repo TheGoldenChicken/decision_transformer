@@ -14,7 +14,7 @@ data_path = 'data_plus_plus/'
 save_path = 'data_split_reward/'
 forward_coefs = [20, 125, 125]
 ctrl_coefs = [0.1, 1e-3, 1e-3] # Halfcheetah, hopper, walker2d
-environments = [['halfcheetah-expert-v2.pkl','halfcheetah-medium-v2.pkl', 'halfcheetah-medium_replay-v2.pkl'],
+environments = [['halfcheetah-expert-v2.pkl','halfcheetah-medium-v2.pkl', 'halfcheetah-medium_replay-v2.pkl', 'halfcheetah-expert_medium_split-v2.pkl'],
                 ['hopper-expert-v2.pkl', 'hopper-medium-v2.pkl', 'hopper-medium_replay-v2.pkl'],
                 ['walker2d-expert-v2.pkl', 'walker2d-medium-v2.pkl', 'walker2d-medium_replay-v2.pkl']]
 
