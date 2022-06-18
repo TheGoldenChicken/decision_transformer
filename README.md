@@ -1,40 +1,29 @@
 
-# Decision Transformer
+# Multi reward decision making using offline reinforcement learning
 
-Lili Chen\*, Kevin Lu\*, Aravind Rajeswaran, Kimin Lee, Aditya Grover, Michael Laskin, Pieter Abbeel, Aravind Srinivas†, and Igor Mordatch†
+Calle Ryge Carlsen, Christian Ole Nielsen, Karl Meisner-Jensen, Magnus Elgaard Bennett
 
-\*equal contribution, †equal advising
+Based on code originally from berkely (license MIT) [github](https://github.com/kzl/decision-transformer)
 
-A link to our paper can be found on [arXiv](https://arxiv.org/abs/2106.01345).
+In relation to the paper *Decision Transformer: Reinforcement Learning Using Sequence modelling* - Lu et. al. 2021. Paper found at [arXiv](https://arxiv.org/abs/2106.01345)
+
 
 ## Overview
 
-Official codebase for [Decision Transformer: Reinforcement Learning via Sequence Modeling](https://sites.google.com/berkeley.edu/decision-transformer).
-Contains scripts to reproduce experiments.
+Using the decision transformer (DT) to perform offline reinforcement learning in Markovian Gym MuJoCo environments.
 
 ![image info](./architecture.png)
 
+The multi-return case for the transformer has been introduced, allowing to condition on multiple return signals, as well as code to generate the multi-return data. 
+
+several submit_environment_case.sh files are included to allow for easy training on DTU HPC. Otherwise performing experiments has been easened when using the console.
+
 ## Instructions
 
-We provide code in two sub-directories: `atari` containing code for Atari experiments and `gym` containing code for OpenAI Gym experiments.
-See corresponding READMEs in each folder for instructions; scripts should be run from the respective directories.
-It may be necessary to add the respective directories to your PYTHONPATH.
+See /gym/readme-gym.md on initializing environment and common errors associated with this.
 
-## Citation
-
-Please cite our paper as:
-
-```
-@article{chen2021decisiontransformer,
-  title={Decision Transformer: Reinforcement Learning via Sequence Modeling},
-  author={Lili Chen and Kevin Lu and Aravind Rajeswaran and Kimin Lee and Aditya Grover and Michael Laskin and Pieter Abbeel and Aravind Srinivas and Igor Mordatch},
-  journal={arXiv preprint arXiv:2106.01345},
-  year={2021}
-}
-```
-
-Note: this is not an official Google or Facebook product.
+All code associated with the decision trannsformer is found in the /gym folder	
 
 ## License
 
-MIT
+DTU

@@ -3,7 +3,7 @@ import numpy as np
 import os
 
 
-data_path = 'data_plus_plus/'
+data_path = ''
 
 
 with open(data_path + 'halfcheetah-expert-v2.pkl', 'rb') as f:

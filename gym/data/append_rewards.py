@@ -10,7 +10,7 @@ def get_forward_reward(positions):
 def get_control_cost(actions):
     return np.sum(np.square(actions), axis=1)
 
-data_path = 'data_plus_plus/'
+data_path = ''
 save_path = 'data_split_reward/'
 forward_coefs = [20, 125, 125]
 ctrl_coefs = [0.1, 1e-3, 1e-3] # Halfcheetah, hopper, walker2d

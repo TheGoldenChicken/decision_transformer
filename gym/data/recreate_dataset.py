@@ -20,7 +20,7 @@ data_features = ['observations', 'next_observations', 'actions', 'rewards', 'ter
 
 for e in envs:
     for d in datasets:
-        with open(f'./data/{e}-{d}-v2.pkl', 'rb') as f:
+        with open(f'./{e}-{d}-v2.pkl', 'rb') as f:
             train_data[f'{e}-{d}'] = pickle.load(f)
 
 

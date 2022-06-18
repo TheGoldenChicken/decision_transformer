@@ -9,10 +9,11 @@ import d4rl
 
 datasets = []
 
-for env_name in ['halfcheetah', 'hopper', 'walker2d']:
-	dataset_types = ['medium', 'medium-replay', 'expert']
-	if env_name != 'walker2d': dataset_types.append('random')
-	for dataset_type in dataset_types:
+envs = ['halfcheetah', 'hopper', 'walker2d']
+datasets = ['medium', 'medium-replay', 'expert', 'random']
+
+for env_name in envs: # Sublist these if you want to update single datasets as a time
+	for dataset_type in datasets:
 		name = f'{env_name}-{dataset_type}-v2'
 		env = gym.make(name)
 		dataset = env.get_dataset()
@@ -46,7 +47,7 @@ for env_name in ['halfcheetah', 'hopper', 'walker2d']:
 		returns = np.array([np.sum(p['rewards']) for p in paths])
 		num_samples = np.sum([p['rewards'].shape[0] for p in paths])
 		print(f'Number of samples collected: {num_samples}')
-		print(f'Trajectory returns: mean = {np.mean(returns)}, std = {np.std(returns)}, max = {np.max(returns)}, min = {np.min(returns)}')
+		print(f'Trajectory returns for {env_name}-{dataset_type}: mean = {np.mean(returns)}, std = {np.std(returns)}, max = {np.max(returns)}, min = {np.min(returns)}')
 
-		with open(f'{name}.pkl', 'wb') as f:
-			pickle.dump(paths, f)
+		# with open(f'{name}.pkl', 'wb') as f:
+		# 	pickle.dump(paths, f)
