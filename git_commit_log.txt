@@ -12,9 +12,9 @@ Major updates to code were often worked on one machine at a time to prevent merg
 Updates to jupyter notebook files were worked on only one computer to prevent when the act of opening a .ipnyb file causes merge conflicts
 
 
-
-75f5683 - TheGoldenChicken, 77 seconds ago : change readme-gym.md
-57aa03e - TheGoldenChicken, 7 minutes ago : Update readme. Delete Atari folder. Move analysis files to analyses, remove attention experiments. Move .sh files to sh_submissions. Move data generation files to data.
+625a79a - TheGoldenChicken, 24 seconds ago : add drive link to README.md
+75f5683 - TheGoldenChicken, 16 minutes ago : change readme-gym.md
+57aa03e - TheGoldenChicken, 22 minutes ago : Update readme. Delete Atari folder. Move analysis files to analyses, remove attention experiments. Move .sh files to sh_submissions. Move data generation files to data.
 3439d89 - CalleRC, 34 hours ago : add 1-sample ttestanalysis and standardization
 19f4eb6 - Christian Ole Nielsen, 2 days ago : prep for BC experiment
 3b6a3a1 - Christian Ole Nielsen, 2 days ago : did the plots and analysis
@@ -56,8 +56,8 @@ daf7fd8 - nielsenchristianole, 10 days ago : prepared for multi reward experimen
 0b11363 - Magnus Elgaard Bennett, 10 days ago : Integrated split rewards formula
 806f3c0 - nielsenchristianole, 11 days ago : cleaned three
 df61919 - Christian Nielsen, 11 days ago : did a whole bunch of experiments
-d1cf48c - Magnus Elgaard Bennett, 11 days ago : Merge branch 'main' of https://github.com/TheGoldenChicken/decision_transformer into main
-5a1d302 - Magnus Elgaard Bennett, 11 days ago : Restored hyperparameters
+d1cf48c - Magnus Elgaard Bennett, 12 days ago : Merge branch 'main' of https://github.com/TheGoldenChicken/decision_transformer into main
+5a1d302 - Magnus Elgaard Bennett, 12 days ago : Restored hyperparameters
 7e05bab - CalleRC, 12 days ago : Merge branch 'main' of https://github.com/TheGoldenChicken/decision_transformer
 7601433 - CalleRC, 12 days ago : add new data_analysis script
 995cc94 - Magnus Elgaard Bennett, 12 days ago : Merge branch 'main' of https://github.com/TheGoldenChicken/decision_transformer into main
