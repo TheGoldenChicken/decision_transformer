@@ -24,6 +24,10 @@ See /gym/readme-gym.md on initializing environment and common errors associated 
 
 All code associated with the decision trannsformer is found in the /gym folder	
 
+## Data
+
+Evaluation data for experiments can be found on [drive](https://drive.google.com/drive/folders/1fo0LxVOTNDmWcHl4iJQCkqCgNMd1WyoY?usp=sharing)
+
 ## License
 
 DTU
